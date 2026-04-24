@@ -1,0 +1,11 @@
+Model Information:
+* title:	[FREE] Flour pile
+* source:	https://sketchfab.com/3d-models/free-flour-pile-95e25055b79541f69d14d64fd76fd5bd
+* author:	Baso Assets (https://sketchfab.com/basoassets)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "[FREE] Flour pile" (https://sketchfab.com/3d-models/free-flour-pile-95e25055b79541f69d14d64fd76fd5bd) by Baso Assets (https://sketchfab.com/basoassets) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

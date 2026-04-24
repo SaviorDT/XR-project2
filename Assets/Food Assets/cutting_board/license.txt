@@ -1,0 +1,11 @@
+Model Information:
+* title:	cutting board
+* source:	https://sketchfab.com/3d-models/cutting-board-06c94ce2e7b84a29ac3bc848b4f862bf
+* author:	ChillLitoStudio (https://sketchfab.com/ChillLitoStudio)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "cutting board" (https://sketchfab.com/3d-models/cutting-board-06c94ce2e7b84a29ac3bc848b4f862bf) by ChillLitoStudio (https://sketchfab.com/ChillLitoStudio) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

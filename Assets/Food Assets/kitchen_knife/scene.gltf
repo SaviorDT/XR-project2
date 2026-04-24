@@ -1,0 +1,307 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1147,
+      "max": [
+        0.5356345772743225,
+        1.8491289615631104,
+        -3.0120773315429688
+      ],
+      "min": [
+        -0.5356345772743225,
+        -1.9647271633148193,
+        -16.46969223022461
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 13764,
+      "componentType": 5126,
+      "count": 1147,
+      "max": [
+        0.9999998807907104,
+        1.0,
+        0.9999977350234985
+      ],
+      "min": [
+        -0.9999998807907104,
+        -0.9999963045120239,
+        -0.9998792409896851
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1147,
+      "max": [
+        0.8750001192092896,
+        1.0000001192092896
+      ],
+      "min": [
+        0.1250000149011612,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 5712,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 27528,
+      "componentType": 5126,
+      "count": 3949,
+      "max": [
+        0.4654727876186371,
+        1.8014256954193115,
+        16.18009376525879
+      ],
+      "min": [
+        -0.4654727280139923,
+        -3.4708328247070313,
+        -3.1250216960906982
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 74916,
+      "componentType": 5126,
+      "count": 3949,
+      "max": [
+        1.0,
+        1.0,
+        0.9999986886978149
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 9176,
+      "componentType": 5126,
+      "count": 3949,
+      "max": [
+        0.8750001192092896,
+        1.0000001192092896
+      ],
+      "min": [
+        0.125,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 22848,
+      "componentType": 5125,
+      "count": 20448,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "calp1 (https://sketchfab.com/calp1)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/kitchen-knife-465704a3c74b4bf5b9e6bfd49cad08a0",
+      "title": "Kitchen Knife"
+    },
+    "generator": "Sketchfab-12.65.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 104640,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 40768,
+      "byteOffset": 104640,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 122304,
+      "byteOffset": 145408,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 267712,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Material.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0129407,
+          0.0129407,
+          0.0159898,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.886364
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "Material.002",
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.668182,
+        "roughnessFactor": 0.11723333880548918
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        0.3004104925874813,
+        2.0014943225122129e-16,
+        -0.9013929085050165,
+        0.0,
+        -0.9013929085050165,
+        6.670452914192133e-17,
+        -0.3004104925874813,
+        0.0,
+        0.0,
+        0.9501345157623291,
+        2.109722431780823e-16,
+        0.0,
+        0.01931166462600231,
+        1.6968641844823216e-17,
+        -0.013919969089329243,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "root"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [
+        4,
+        5
+      ],
+      "matrix": [
+        0.14057724177837372,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.1150268092751503,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.14057724177837372,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "knife_0"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_4"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_5"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
