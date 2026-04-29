@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/XR in.unity.meta
+guid: 8d1f7079575d0e442ba4c7a658beb47d
+========
 guid: 93f8ea8440fd48343b3ff94b61a53b91
+>>>>>>>> 1ea35f5172fdfe1cfe3724a9cda7dac56c3b1a93:Assets/_Recovery/0.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
