@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 112}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 352
+  controlID: 181
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 112}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 351
+  controlID: 180
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 112}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 26
+  controlID: 27
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -220,8 +220,8 @@ MonoBehaviour:
     y: 0
     width: 328
     height: 708.8
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -272,8 +272,8 @@ MonoBehaviour:
     y: 0
     width: 404.80005
     height: 572
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -773,24 +773,13 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 938.2}
+      scrollPos: {x: 0, y: 378.2}
       m_SelectedIDs:
-      - m_Data: -373652
+      - m_Data: 64148
       m_LastClickedID:
-        m_Data: -373652
+        m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -375274
-      - m_Data: -373600
-      - m_Data: -27338
-      - m_Data: -27334
-      - m_Data: -24752
-      - m_Data: -24722
-      - m_Data: -18664
       - m_Data: -1316
-      - m_Data: 65698
-      - m_Data: 66118
-      - m_Data: 68180
-      - m_Data: 68212
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -916,7 +905,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -926,38 +915,38 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\wiewi\\OneDrive\\\u6587\u4EF6\\GitHub\\XR-project2"
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 427}
+    scrollPos: {x: 0, y: 127}
     m_SelectedIDs:
-    - m_Data: 142422
+    - m_Data: 142830
     m_LastClickedID:
-      m_Data: 142422
+      m_Data: 142830
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 141756
-    - m_Data: 141758
-    - m_Data: 141760
-    - m_Data: 141762
-    - m_Data: 141764
-    - m_Data: 141766
-    - m_Data: 141768
-    - m_Data: 141770
-    - m_Data: 141772
-    - m_Data: 142398
-    - m_Data: 142410
-    - m_Data: 142414
-    - m_Data: 142428
-    - m_Data: 142430
-    - m_Data: 1315300
-    - m_Data: 1315422
-    - m_Data: 1316318
-    - m_Data: 1316322
+    - m_Data: 142830
+    - m_Data: 142832
+    - m_Data: 142834
+    - m_Data: 142836
+    - m_Data: 142838
+    - m_Data: 142840
+    - m_Data: 142842
+    - m_Data: 142844
+    - m_Data: 142846
+    - m_Data: 142848
+    - m_Data: 142850
+    - m_Data: 142852
+    - m_Data: 142854
+    - m_Data: 142856
+    - m_Data: 142858
+    - m_Data: 142860
+    - m_Data: 142862
+    - m_Data: 142864
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -991,15 +980,24 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 141756
-    - m_Data: 141758
-    - m_Data: 141760
-    - m_Data: 141762
-    - m_Data: 141764
-    - m_Data: 141766
-    - m_Data: 141768
-    - m_Data: 141770
-    - m_Data: 141772
+    - m_Data: 142830
+    - m_Data: 142832
+    - m_Data: 142834
+    - m_Data: 142836
+    - m_Data: 142838
+    - m_Data: 142840
+    - m_Data: 142842
+    - m_Data: 142844
+    - m_Data: 142846
+    - m_Data: 142848
+    - m_Data: 142850
+    - m_Data: 142852
+    - m_Data: 142854
+    - m_Data: 142856
+    - m_Data: 142858
+    - m_Data: 142860
+    - m_Data: 142862
+    - m_Data: 142864
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1027,9 +1025,9 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: -373652
-    m_LastClickedInstanceID: -373652
-    m_HadKeyboardFocusLastEvent: 1
+    - m_Data: 64148
+    m_LastClickedInstanceID: 64148
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 678036
     m_RenameOverlay:
@@ -1057,7 +1055,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 3459.1}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 139.99994
