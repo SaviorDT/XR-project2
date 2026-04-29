@@ -14,6 +14,7 @@ public sealed class BeatTimingManager
 {
 	private readonly double _bpm;
 	private readonly double[] _beats;
+	private readonly TempoEventType[] _actions;
 	private readonly Action<BeatTimingResult>[] _callbacks;
 	private readonly double _toleranceSeconds;
 	private readonly double _startTime;
@@ -22,6 +23,7 @@ public sealed class BeatTimingManager
 	public BeatTimingManager(
 		double bpm,
 		double[] beats,
+		TempoEventType[] actions,
 		Action<BeatTimingResult>[] callbacks,
 		double toleranceSeconds)
 	{
@@ -30,14 +32,15 @@ public sealed class BeatTimingManager
 			throw new ArgumentOutOfRangeException(nameof(bpm), "BPM must be positive.");
 		}
 
-		if (beats == null || callbacks == null)
+		if (beats == null || actions == null || callbacks == null)
 		{
-			throw new ArgumentNullException(beats == null ? nameof(beats) : nameof(callbacks));
+			string name = beats == null ? nameof(beats) : actions == null ? nameof(actions) : nameof(callbacks);
+			throw new ArgumentNullException(name);
 		}
 
-		if (beats.Length != callbacks.Length)
+		if (beats.Length != actions.Length || beats.Length != callbacks.Length)
 		{
-			throw new ArgumentException("beats and callbacks must have the same length.");
+			throw new ArgumentException("beats, actions, and callbacks must have the same length.");
 		}
 
 		if (toleranceSeconds < 0)
@@ -47,6 +50,7 @@ public sealed class BeatTimingManager
 
 		_bpm = bpm;
 		_beats = beats;
+		_actions = actions;
 		_callbacks = callbacks;
 		_toleranceSeconds = toleranceSeconds;
 		_startTime = Time.timeAsDouble;
@@ -55,9 +59,14 @@ public sealed class BeatTimingManager
 
 	public bool IsFinished => _nextIndex >= _beats.Length;
 
-	public void BeatInput()
+	public void BeatInput(TempoEventType action)
 	{
 		if (IsFinished)
+		{
+			return;
+		}
+
+		if (action != _actions[_nextIndex])
 		{
 			return;
 		}
