@@ -283,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 2989492}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.02, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6296,6 +6296,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 234987676}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 234987679}
   m_SourcePrefab: {fileID: 100100000, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
 --- !u!1 &234987674 stripped
 GameObject:
@@ -6378,6 +6381,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &234987679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234987674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69658184ee3871643b0053b9c011b9c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrumStickSwingDetector
+  grabInteractable: {fileID: 0}
+  swingThreshold: 2
+  downwardAngleThreshold: 0.5
+  cooldownTime: 0.3
+  swingEndSpeedRatio: 0.5
+  OnSwingDetected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &244170671
 GameObject:
   m_ObjectHideFlags: 0
@@ -23817,10 +23852,7 @@ PrefabInstance:
     - {fileID: -8700617353114198275, guid: 1b5569a319c3c954a9d670de2076bdc6, type: 3}
     - {fileID: -4876808054094043266, guid: 1b5569a319c3c954a9d670de2076bdc6, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b5569a319c3c954a9d670de2076bdc6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1314349423}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b5569a319c3c954a9d670de2076bdc6, type: 3}
 --- !u!1 &1244296331
 GameObject:
@@ -24796,50 +24828,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310237181}
   m_Mesh: {fileID: 7940415646745256633, guid: cce70313d2f8652429e748386576e836, type: 3}
-<<<<<<< HEAD
---- !u!1 &1314349422 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b5569a319c3c954a9d670de2076bdc6, type: 3}
-  m_PrefabInstance: {fileID: 1243923946}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1314349423
-Animator:
-  serializedVersion: 7
-=======
 --- !u!1 &1313076129
 GameObject:
->>>>>>> 220d6fe45d89c4e7839c8b624ca94f6c50c875e6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 1314349422}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5ecaac268f8cd4946aaa0a56b55e359a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
-=======
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1313076130}
   m_Layer: 0
-  m_Name: prp00002questController_animrig:RIG_right_monterey_controller_world
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1313076130
 Transform:
   m_ObjectHideFlags: 0
@@ -24856,7 +24860,6 @@ Transform:
   - {fileID: 1723874680}
   m_Father: {fileID: 1769140356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> 220d6fe45d89c4e7839c8b624ca94f6c50c875e6
 --- !u!1 &1316597775
 GameObject:
   m_ObjectHideFlags: 0
