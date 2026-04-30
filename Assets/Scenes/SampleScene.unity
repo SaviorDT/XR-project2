@@ -6299,6 +6299,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 234987679}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 234987680}
   m_SourcePrefab: {fileID: 100100000, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
 --- !u!1 &234987674 stripped
 GameObject:
@@ -6338,7 +6341,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234987674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
   m_Name: 
@@ -6413,6 +6416,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &234987680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234987674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea907061273c246826b63465f1bc8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
+  controllerAnchor: {fileID: 838053784}
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &244170671
 GameObject:
   m_ObjectHideFlags: 0
