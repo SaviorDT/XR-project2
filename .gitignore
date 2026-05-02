@@ -61,3 +61,6 @@ crashlytics-build.properties
 
 # OS related
 .DS_Store
+
+# Layout settings
+UserSettings/Layouts/default-6000.dwlt
