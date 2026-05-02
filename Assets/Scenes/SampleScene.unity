@@ -7597,10 +7597,10 @@ PrefabInstance:
       addedObject: {fileID: 234987676}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 234987680}
+      addedObject: {fileID: 234987679}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 234987679}
+      addedObject: {fileID: 234987680}
   m_SourcePrefab: {fileID: 100100000, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
 --- !u!1 &234987674 stripped
 GameObject:
@@ -7701,7 +7701,19 @@ MonoBehaviour:
   swingEndSpeedRatio: 0.5
   OnSwingDetected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 102900000, guid: 801eff93d40ba9640bcd13c3c6c8ca54, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &234987680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7711,9 +7723,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 234987674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c19b78798d4bc2479e27b8ad3b27c03, type: 3}
+  m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHandknife
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
   controllerAnchor: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
@@ -13554,29 +13566,13 @@ PrefabInstance:
       addedObject: {fileID: 524375486}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 524375485}
+      addedObject: {fileID: 524375487}
   m_SourcePrefab: {fileID: 100100000, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
 --- !u!1 &524375484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
   m_PrefabInstance: {fileID: 524375483}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &524375485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524375484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f9f7abe760cda44b89bb7d1fd462fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHandroller
-  controllerAnchor: {fileID: 0}
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: 0, y: 0, z: 0}
-  detachPosition: {x: -25.538, y: -4.71, z: 33.578}
 --- !u!114 &524375486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13595,6 +13591,22 @@ MonoBehaviour:
   OnRollDetected:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &524375487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524375484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
+  controllerAnchor: {fileID: 0}
+  positionOffset: {x: -25.538, y: -4.71, z: 33.578}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  detachPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &526308783
 GameObject:
   m_ObjectHideFlags: 0
@@ -51821,6 +51833,7 @@ MonoBehaviour:
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
   detachPosition: {x: 0, y: 0, z: 0}
+  isSnapped: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

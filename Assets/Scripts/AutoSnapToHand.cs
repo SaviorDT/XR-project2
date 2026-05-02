@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AutoSnapToHandroller : MonoBehaviour
+public class AutoSnapToHand : MonoBehaviour
 {
     [Header("=== 吸附設定 ===")]
     [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > RightHandAnchor")]
@@ -16,7 +16,7 @@ public class AutoSnapToHandroller : MonoBehaviour
     [Tooltip("脫離後物件回到的位置（世界座標）")]
     [SerializeField] private Vector3 detachPosition = Vector3.zero;
 
-    private bool isSnapped = false;
+    public bool IsSnapped { get; private set; }
 
     // =====================
     //   Unity 生命週期
@@ -24,10 +24,9 @@ public class AutoSnapToHandroller : MonoBehaviour
 
     void Update()
     {
-        if (!isSnapped) return;
+        if (!IsSnapped) return;
         if (controllerAnchor == null) return;
 
-        // 每幀跟隨手把位置與旋轉
         transform.position = controllerAnchor.position
             + controllerAnchor.TransformDirection(positionOffset);
 
@@ -42,7 +41,7 @@ public class AutoSnapToHandroller : MonoBehaviour
     /// <summary>
     /// 吸附到手上，可接在任意 UnityEvent
     /// </summary>
-    public void SnapToHandroller()
+    public void SnapToHand()
     {
         if (controllerAnchor == null)
         {
@@ -50,22 +49,17 @@ public class AutoSnapToHandroller : MonoBehaviour
             return;
         }
 
-        isSnapped = true;
+        IsSnapped = true;
         Debug.Log("[AutoSnapToHand] 物件已吸附到手上");
     }
 
     /// <summary>
     /// 從手上脫離，可接在任意 UnityEvent
     /// </summary>
-    public void DetachFromHandroller()
+    public void DetachFromHand()
     {
-        isSnapped = false;
+        IsSnapped = false;
         transform.position = detachPosition;
         Debug.Log("[AutoSnapToHand] 物件已脫離手把");
     }
-
-    /// <summary>
-    /// 查詢目前是否吸附中
-    /// </summary>
-    public bool IsSnappedroller => isSnapped;
 }
