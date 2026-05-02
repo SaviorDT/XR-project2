@@ -7726,7 +7726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
-  controllerAnchor: {fileID: 0}
+  controllerAnchor: {fileID: 838053784}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
   detachPosition: {x: -29.136, y: 0.039, z: 24.94333}
@@ -13590,7 +13590,19 @@ MonoBehaviour:
   snapIgnoreDuration: 0.2
   OnRollDetected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 524375484}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &524375487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13603,7 +13615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
-  controllerAnchor: {fileID: 0}
+  controllerAnchor: {fileID: 838053784}
   positionOffset: {x: -25.538, y: -4.71, z: 33.578}
   rotationOffset: {x: 0, y: 0, z: 0}
   detachPosition: {x: 0, y: 0, z: 0}

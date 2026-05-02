@@ -16,6 +16,13 @@ public class DrumStickSwingDetector : MonoBehaviour
     [Tooltip("速度降到此比例以下才算揮動結束")]
     [SerializeField] private float swingEndSpeedRatio = 0.5f;
 
+    [Header("=== Tempo 設定 ===")]
+    [Tooltip("拖入場景中的 GameCore 物件")]
+    [SerializeField] private GameCore gameCore;
+
+    [Tooltip("此道具對應的 Tempo 事件類型")]
+    [SerializeField] private TempoEventType eventType = TempoEventType.cut;
+
     [Header("=== 事件 ===")]
     public UnityEvent OnSwingDetected;
 
@@ -95,7 +102,8 @@ public class DrumStickSwingDetector : MonoBehaviour
             {
                 lastSwingTime = Time.time;
                 OnSwingDetected?.Invoke();
-                Debug.Log("[DrumStick] 偵測到向下揮動！");
+                gameCore?.OnInput(eventType);
+                Debug.Log($"[DrumStick] 偵測到向下揮動！事件類型: {eventType}");
             }
             ResetSwingState();
         }
