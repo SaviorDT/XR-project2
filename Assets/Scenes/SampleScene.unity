@@ -7699,10 +7699,12 @@ MonoBehaviour:
   downwardAngleThreshold: 0.5
   cooldownTime: 0.3
   swingEndSpeedRatio: 0.5
+  gameCore: {fileID: 0}
+  eventType: 1
   OnSwingDetected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 102900000, guid: 801eff93d40ba9640bcd13c3c6c8ca54, type: 3}
+      - m_Target: {fileID: 1278672292}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 0
@@ -7713,7 +7715,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &234987680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51838,14 +51840,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7327743040664168138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dd90fe2f2a2ee04989bcb40b97d9d90, type: 3}
+  m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHandpizza
-  controllerAnchor: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
+  controllerAnchor: {fileID: 838053784}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
-  detachPosition: {x: 0, y: 0, z: 0}
-  isSnapped: 0
+  detachPosition: {x: 0, y: 0.001101433, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
