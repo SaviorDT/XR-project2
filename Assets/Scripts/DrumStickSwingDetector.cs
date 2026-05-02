@@ -1,22 +1,25 @@
 using UnityEngine;
 using UnityEngine.Events;
-using Oculus.Interaction;
 
 public class DrumStickSwingDetector : MonoBehaviour
 {
-    [Header("=== Grab 設定 ===")]
-    [SerializeField] private GrabInteractable grabInteractable;
-
     [Header("=== 揮動偵測參數 ===")]
+    [Tooltip("觸發揮動所需的最低速度（m/s）")]
     [SerializeField] private float swingThreshold = 2.0f;
+
+    [Tooltip("速度方向與正下方的相似度閾值（-1~1，越高越嚴格）")]
     [SerializeField] private float downwardAngleThreshold = 0.5f;
+
+    [Tooltip("兩次揮動之間的最短間隔（秒）")]
     [SerializeField] private float cooldownTime = 0.3f;
+
+    [Tooltip("速度降到此比例以下才算揮動結束")]
     [SerializeField] private float swingEndSpeedRatio = 0.5f;
 
     [Header("=== 事件 ===")]
     public UnityEvent OnSwingDetected;
 
-    private bool isGrabbed = false;
+    private bool isDetecting = false;
     private bool swingInProgress = false;
     private Vector3 previousPosition;
     private Vector3 currentVelocity;
@@ -26,49 +29,37 @@ public class DrumStickSwingDetector : MonoBehaviour
     //   Unity 生命週期
     // =====================
 
-    void Start()
-    {
-        if (grabInteractable == null)
-            grabInteractable = GetComponent<GrabInteractable>();
-
-        grabInteractable.WhenSelectingInteractorAdded.Action += OnGrabbed;
-        grabInteractable.WhenSelectingInteractorRemoved.Action += OnReleased;
-
-        previousPosition = transform.position;
-    }
-
     void Update()
     {
-        if (!isGrabbed) return;
+        if (!isDetecting) return;
 
         CalculateVelocity();
         DetectDownSwing();
     }
 
-    void OnDestroy()
-    {
-        if (grabInteractable != null)
-        {
-            grabInteractable.WhenSelectingInteractorAdded.Action -= OnGrabbed;
-            grabInteractable.WhenSelectingInteractorRemoved.Action -= OnReleased;
-        }
-    }
-
     // =====================
-    //   Grab 事件
+    //   公開方法（接 UnityEvent）
     // =====================
 
-    private void OnGrabbed(GrabInteractor interactor)
+    /// <summary>
+    /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
+    /// </summary>
+    public void StartDetecting()
     {
-        isGrabbed = true;
+        isDetecting = true;
         previousPosition = transform.position;
         ResetSwingState();
+        Debug.Log("[DrumStick] 開始偵測揮動");
     }
 
-    private void OnReleased(GrabInteractor interactor)
+    /// <summary>
+    /// 停止偵測，接在 AutoSnapToHand.DetachFromHand() 之後
+    /// </summary>
+    public void StopDetecting()
     {
-        isGrabbed = false;
+        isDetecting = false;
         ResetSwingState();
+        Debug.Log("[DrumStick] 停止偵測揮動");
     }
 
     // =====================

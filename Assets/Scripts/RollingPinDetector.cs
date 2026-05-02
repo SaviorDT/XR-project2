@@ -1,15 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
-using Oculus.Interaction;
 
 public class RollingPinDetector : MonoBehaviour
 {
-    [Header("=== Grab 設定 ===")]
-    [Tooltip("擀麵棍左側的 GrabInteractable")]
-    [SerializeField] private GrabInteractable leftGrabInteractable;
-    [Tooltip("擀麵棍右側的 GrabInteractable")]
-    [SerializeField] private GrabInteractable rightGrabInteractable;
-
     [Header("=== 滾動偵測參數 ===")]
     [Tooltip("累積多少距離（公尺）後觸發一次事件")]
     [SerializeField] private float requiredDistance = 0.15f;
@@ -17,14 +10,13 @@ public class RollingPinDetector : MonoBehaviour
     [Tooltip("移動速度低於此值時不計入累積（過濾靜止抖動）")]
     [SerializeField] private float minSpeedThreshold = 0.05f;
 
-    [Tooltip("吸附後忽略偵測的緩衝時間（秒），避免吸附瞬間誤觸發")]
+    [Tooltip("開始偵測後忽略的緩衝時間（秒），避免吸附瞬間誤觸發")]
     [SerializeField] private float snapIgnoreDuration = 0.2f;
 
     [Header("=== 事件 ===")]
     public UnityEvent OnRollDetected;
 
-    // 狀態
-    private bool isGrabbed = false;
+    private bool isDetecting = false;
     private Vector3 previousPosition;
     private float accumulatedDistance = 0f;
     private float snapIgnoreTimer = 0f;
@@ -33,71 +25,37 @@ public class RollingPinDetector : MonoBehaviour
     //   Unity 生命週期
     // =====================
 
-    void Start()
-    {
-        // 左右兩側都監聽，任一手抓住就算
-        if (leftGrabInteractable != null)
-        {
-            leftGrabInteractable.WhenSelectingInteractorAdded.Action += OnGrabbed;
-            leftGrabInteractable.WhenSelectingInteractorRemoved.Action += OnReleased;
-        }
-
-        if (rightGrabInteractable != null)
-        {
-            rightGrabInteractable.WhenSelectingInteractorAdded.Action += OnGrabbed;
-            rightGrabInteractable.WhenSelectingInteractorRemoved.Action += OnReleased;
-        }
-
-        previousPosition = GetTrackingPosition();
-    }
-
     void Update()
     {
-        if (!isGrabbed) return;
+        if (!isDetecting) return;
 
         CalculateRolling();
     }
 
-    void OnDestroy()
-    {
-        if (leftGrabInteractable != null)
-        {
-            leftGrabInteractable.WhenSelectingInteractorAdded.Action -= OnGrabbed;
-            leftGrabInteractable.WhenSelectingInteractorRemoved.Action -= OnReleased;
-        }
-
-        if (rightGrabInteractable != null)
-        {
-            rightGrabInteractable.WhenSelectingInteractorAdded.Action -= OnGrabbed;
-            rightGrabInteractable.WhenSelectingInteractorRemoved.Action -= OnReleased;
-        }
-    }
-
     // =====================
-    //   Grab 事件
+    //   公開方法（接 UnityEvent）
     // =====================
 
-    private void OnGrabbed(GrabInteractor interactor)
+    /// <summary>
+    /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
+    /// </summary>
+    public void StartDetecting()
     {
-        isGrabbed = true;
+        isDetecting = true;
         accumulatedDistance = 0f;
-        snapIgnoreTimer = snapIgnoreDuration; // 開始緩衝倒數
-        previousPosition = GetTrackingPosition();
+        snapIgnoreTimer = snapIgnoreDuration;
+        previousPosition = transform.position;
+        Debug.Log("[RollingPin] 開始偵測滾動");
     }
 
-    private void OnReleased(GrabInteractor interactor)
+    /// <summary>
+    /// 停止偵測，接在 AutoSnapToHand.DetachFromHand() 之後
+    /// </summary>
+    public void StopDetecting()
     {
-        // 兩手都放開才算結束
-        bool leftHeld = leftGrabInteractable != null
-            && leftGrabInteractable.SelectingInteractorCount > 0;
-        bool rightHeld = rightGrabInteractable != null
-            && rightGrabInteractable.SelectingInteractorCount > 0;
-
-        if (!leftHeld && !rightHeld)
-        {
-            isGrabbed = false;
-            accumulatedDistance = 0f;
-        }
+        isDetecting = false;
+        accumulatedDistance = 0f;
+        Debug.Log("[RollingPin] 停止偵測滾動");
     }
 
     // =====================
@@ -110,11 +68,11 @@ public class RollingPinDetector : MonoBehaviour
         if (snapIgnoreTimer > 0f)
         {
             snapIgnoreTimer -= Time.deltaTime;
-            previousPosition = GetTrackingPosition();
+            previousPosition = transform.position;
             return;
         }
 
-        Vector3 currentPosition = GetTrackingPosition();
+        Vector3 currentPosition = transform.position;
         Vector3 delta = currentPosition - previousPosition;
 
         // 只計算水平移動（忽略上下）
@@ -137,17 +95,5 @@ public class RollingPinDetector : MonoBehaviour
             OnRollDetected?.Invoke();
             Debug.Log("[RollingPin] 偵測到滾動！");
         }
-    }
-
-    // =====================
-    //   工具方法
-    // =====================
-
-    /// <summary>
-    /// 追蹤物件本身的中心點位置
-    /// </summary>
-    private Vector3 GetTrackingPosition()
-    {
-        return transform.position;
     }
 }
