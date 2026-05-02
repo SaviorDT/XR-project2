@@ -7480,11 +7480,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.17865
+      value: -29.136
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000005923205
+      value: 0.039
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7595,6 +7595,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 234987676}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 234987680}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 234987679}
   m_SourcePrefab: {fileID: 100100000, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
 --- !u!1 &234987674 stripped
 GameObject:
@@ -7634,7 +7640,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234987674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
   m_Name: 
@@ -7677,6 +7683,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &234987679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234987674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69658184ee3871643b0053b9c011b9c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrumStickSwingDetector
+  swingThreshold: 2
+  downwardAngleThreshold: 0.5
+  cooldownTime: 0.3
+  swingEndSpeedRatio: 0.5
+  OnSwingDetected:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &234987680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234987674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c19b78798d4bc2479e27b8ad3b27c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHandknife
+  controllerAnchor: {fileID: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  detachPosition: {x: -29.136, y: 0.039, z: 24.94333}
 --- !u!1 &244170671
 GameObject:
   m_ObjectHideFlags: 0
@@ -13507,8 +13548,53 @@ PrefabInstance:
     - {fileID: 65702495048144492, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
     - {fileID: -8700617353114198275, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 524375486}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 524375485}
   m_SourcePrefab: {fileID: 100100000, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
+--- !u!1 &524375484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: da56f6e3d9d997f40adb0f1b398d5174, type: 3}
+  m_PrefabInstance: {fileID: 524375483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &524375485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524375484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f9f7abe760cda44b89bb7d1fd462fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHandroller
+  controllerAnchor: {fileID: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  detachPosition: {x: -25.538, y: -4.71, z: 33.578}
+--- !u!114 &524375486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524375484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9785065429ad144eba9f9456d3ec462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RollingPinDetector
+  requiredDistance: 0.15
+  minSpeedThreshold: 0.05
+  snapIgnoreDuration: 0.2
+  OnRollDetected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &526308783
 GameObject:
   m_ObjectHideFlags: 0
@@ -51579,6 +51665,7 @@ GameObject:
   - component: {fileID: 9111363139773504194}
   - component: {fileID: 9121128133908401193}
   - component: {fileID: 1283163455241932090}
+  - component: {fileID: 9121128133908401194}
   m_Layer: 0
   m_Name: Dough
   m_TagString: Untagged
@@ -51718,6 +51805,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7327743040664168138}
   m_Mesh: {fileID: -4428754836550342530, guid: 2e85154595967924db925548c8a622f5, type: 3}
+--- !u!114 &9121128133908401194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7327743040664168138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd90fe2f2a2ee04989bcb40b97d9d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHandpizza
+  controllerAnchor: {fileID: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  detachPosition: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
