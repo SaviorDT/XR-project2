@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class RollingPinDetector : MonoBehaviour
 {
@@ -13,8 +13,8 @@ public class RollingPinDetector : MonoBehaviour
     [Tooltip("開始偵測後忽略的緩衝時間（秒），避免吸附瞬間誤觸發")]
     [SerializeField] private float snapIgnoreDuration = 0.2f;
 
-    [Header("=== 事件 ===")]
-    public UnityEvent OnRollDetected;
+    // callback，由外部注入
+    private Action onRollDetected;
 
     private bool isDetecting = false;
     private Vector3 previousPosition;
@@ -33,8 +33,16 @@ public class RollingPinDetector : MonoBehaviour
     }
 
     // =====================
-    //   公開方法（接 UnityEvent）
+    //   公開方法
     // =====================
+
+    /// <summary>
+    /// 注入 callback，由呼叫者決定觸發後要做什麼
+    /// </summary>
+    public void SetCallback(Action callback)
+    {
+        onRollDetected = callback;
+    }
 
     /// <summary>
     /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
@@ -92,7 +100,7 @@ public class RollingPinDetector : MonoBehaviour
         if (accumulatedDistance >= requiredDistance)
         {
             accumulatedDistance = 0f;
-            OnRollDetected?.Invoke();
+            onRollDetected?.Invoke();
             Debug.Log("[RollingPin] 偵測到滾動！");
         }
     }

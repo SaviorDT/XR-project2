@@ -7699,23 +7699,7 @@ MonoBehaviour:
   downwardAngleThreshold: 0.5
   cooldownTime: 0.3
   swingEndSpeedRatio: 0.5
-  gameCore: {fileID: 0}
   eventType: 1
-  OnSwingDetected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1278672292}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
 --- !u!114 &234987680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13590,21 +13574,6 @@ MonoBehaviour:
   requiredDistance: 0.15
   minSpeedThreshold: 0.05
   snapIgnoreDuration: 0.2
-  OnRollDetected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 524375484}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &524375487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13618,9 +13587,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
   controllerAnchor: {fileID: 838053784}
-  positionOffset: {x: -25.538, y: -4.71, z: 33.578}
+  positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
-  detachPosition: {x: 0, y: 0, z: 0}
+  detachPosition: {x: -25.538, y: -4.71, z: 33.578}
 --- !u!1 &526308783
 GameObject:
   m_ObjectHideFlags: 0
@@ -51865,10 +51834,6 @@ MonoBehaviour:
   cooldownTime: 0.3
   throwEndSpeedRatio: 0.5
   centerEyeAnchor: {fileID: 506759869}
-  gameCore: {fileID: 0}
-  OnThrowDetected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

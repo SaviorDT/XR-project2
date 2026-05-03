@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PizzaThrowDetector : MonoBehaviour
 {
@@ -20,11 +20,8 @@ public class PizzaThrowDetector : MonoBehaviour
     [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > CenterEyeAnchor")]
     [SerializeField] private Transform centerEyeAnchor;
 
-    [Tooltip("拖入場景中的 GameCore 物件")]
-    [SerializeField] private GameCore gameCore;
-
-    [Header("=== 事件 ===")]
-    public UnityEvent OnThrowDetected;
+    // callback，由外部注入
+    private Action onThrowDetected;
 
     private bool isDetecting = false;
     private bool throwInProgress = false;
@@ -45,8 +42,16 @@ public class PizzaThrowDetector : MonoBehaviour
     }
 
     // =====================
-    //   公開方法（接 UnityEvent）
+    //   公開方法
     // =====================
+
+    /// <summary>
+    /// 注入 callback，由呼叫者決定觸發後要做什麼
+    /// </summary>
+    public void SetCallback(Action callback)
+    {
+        onThrowDetected = callback;
+    }
 
     /// <summary>
     /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
@@ -100,7 +105,7 @@ public class PizzaThrowDetector : MonoBehaviour
         Vector3 playerRight = Vector3.Cross(Vector3.up, playerForward);
 
         // 把速度投影到玩家的左右軸和垂直軸
-        float rightwardSpeed = Vector3.Dot(currentVelocity, playerRight);  // 正值=向右，負值=向左
+        float rightwardSpeed = Vector3.Dot(currentVelocity, playerRight); // 正值=向右，負值=向左
         float verticalSpeed = Mathf.Abs(currentVelocity.y);
         float horizontalSpeed = new Vector2(currentVelocity.x, currentVelocity.z).magnitude;
 
@@ -114,14 +119,13 @@ public class PizzaThrowDetector : MonoBehaviour
             throwInProgress = true;
         }
 
-        // 2. 偵測揮舞結束並觸發事件
+        // 2. 偵測揮舞結束並觸發 callback
         if (throwInProgress && speed < throwThreshold * throwEndSpeedRatio)
         {
             if (Time.time - lastThrowTime > cooldownTime)
             {
                 lastThrowTime = Time.time;
-                OnThrowDetected?.Invoke();
-                gameCore?.OnInput(TempoEventType.send);
+                onThrowDetected?.Invoke();
                 Debug.Log("[PizzaThrow] 偵測到右向左揮舞！");
             }
             ResetThrowState();

@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class DrumStickSwingDetector : MonoBehaviour
 {
@@ -17,14 +17,11 @@ public class DrumStickSwingDetector : MonoBehaviour
     [SerializeField] private float swingEndSpeedRatio = 0.5f;
 
     [Header("=== Tempo 設定 ===")]
-    [Tooltip("拖入場景中的 GameCore 物件")]
-    [SerializeField] private GameCore gameCore;
-
     [Tooltip("此道具對應的 Tempo 事件類型")]
     [SerializeField] private TempoEventType eventType = TempoEventType.cut;
 
-    [Header("=== 事件 ===")]
-    public UnityEvent OnSwingDetected;
+    // callback，由外部注入
+    private Action onSwingDetected;
 
     private bool isDetecting = false;
     private bool swingInProgress = false;
@@ -45,8 +42,16 @@ public class DrumStickSwingDetector : MonoBehaviour
     }
 
     // =====================
-    //   公開方法（接 UnityEvent）
+    //   公開方法
     // =====================
+
+    /// <summary>
+    /// 注入 callback，由呼叫者決定觸發後要做什麼
+    /// </summary>
+    public void SetCallback(Action callback)
+    {
+        onSwingDetected = callback;
+    }
 
     /// <summary>
     /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
@@ -95,14 +100,13 @@ public class DrumStickSwingDetector : MonoBehaviour
             swingInProgress = true;
         }
 
-        // 2. 偵測揮動結束並觸發事件
+        // 2. 偵測揮動結束並觸發 callback
         if (swingInProgress && speed < swingThreshold * swingEndSpeedRatio)
         {
             if (Time.time - lastSwingTime > cooldownTime)
             {
                 lastSwingTime = Time.time;
-                OnSwingDetected?.Invoke();
-                gameCore?.OnInput(eventType);
+                onSwingDetected?.Invoke();
                 Debug.Log($"[DrumStick] 偵測到向下揮動！事件類型: {eventType}");
             }
             ResetSwingState();
