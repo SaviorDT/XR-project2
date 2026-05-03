@@ -13740,6 +13740,8 @@ MonoBehaviour:
   requiredDistance: 0.15
   minSpeedThreshold: 0.05
   snapIgnoreDuration: 0.2
+  forwardDominance: 1.5
+  centerEyeAnchor: {fileID: 506759869}
 --- !u!114 &524375487
 MonoBehaviour:
   m_ObjectHideFlags: 0
