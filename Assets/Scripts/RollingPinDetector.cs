@@ -13,6 +13,13 @@ public class RollingPinDetector : MonoBehaviour
     [Tooltip("開始偵測後忽略的緩衝時間（秒），避免吸附瞬間誤觸發")]
     [SerializeField] private float snapIgnoreDuration = 0.2f;
 
+    [Tooltip("前後移動分量必須比左右移動分量大幾倍才計入")]
+    [SerializeField] private float forwardDominance = 1.5f;
+
+    [Header("=== 參考物件 ===")]
+    [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > CenterEyeAnchor")]
+    [SerializeField] private Transform centerEyeAnchor;
+
     // callback，由外部注入
     private Action onRollDetected;
 
@@ -72,6 +79,12 @@ public class RollingPinDetector : MonoBehaviour
 
     private void CalculateRolling()
     {
+        if (centerEyeAnchor == null)
+        {
+            Debug.LogWarning("[RollingPin] centerEyeAnchor 未設定！");
+            return;
+        }
+
         // 緩衝時間內跳過偵測，持續更新 previousPosition 避免累積殘差
         if (snapIgnoreTimer > 0f)
         {
@@ -82,16 +95,26 @@ public class RollingPinDetector : MonoBehaviour
 
         Vector3 currentPosition = transform.position;
         Vector3 delta = currentPosition - previousPosition;
+        delta.y = 0f; // 忽略上下
 
-        // 只計算水平移動（忽略上下）
-        delta.y = 0f;
+        // 取得玩家面向的水平前方與右方
+        Vector3 playerForward = centerEyeAnchor.forward;
+        playerForward.y = 0f;
+        playerForward.Normalize();
+        Vector3 playerRight = Vector3.Cross(Vector3.up, playerForward);
+
+        // 把移動量投影到前後軸和左右軸
+        float forwardAmount = Mathf.Abs(Vector3.Dot(delta, playerForward));
+        float sidewaysAmount = Mathf.Abs(Vector3.Dot(delta, playerRight));
+
+        // 前後分量必須大於左右分量才計入
+        bool isForwardMovement = forwardAmount > sidewaysAmount * forwardDominance;
 
         float speed = delta.magnitude / Time.deltaTime;
 
-        // 速度夠才累積距離
-        if (speed > minSpeedThreshold)
+        if (speed > minSpeedThreshold && isForwardMovement)
         {
-            accumulatedDistance += delta.magnitude;
+            accumulatedDistance += forwardAmount;
         }
 
         previousPosition = currentPosition;
