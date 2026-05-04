@@ -15,7 +15,7 @@ public sealed class BeatTimingManager
 	private readonly double _bpm;
 	private readonly double[] _beats;
 	private readonly TempoEventType[] _actions;
-	private readonly Action<BeatTimingResult>[] _callbacks;
+	private readonly Action<BeatTimingResult, double>[] _callbacks;
 	private readonly double _toleranceSeconds;
 	private readonly double _startTime;
 	private int _nextIndex;
@@ -24,7 +24,7 @@ public sealed class BeatTimingManager
 		double bpm,
 		double[] beats,
 		TempoEventType[] actions,
-		Action<BeatTimingResult>[] callbacks,
+		Action<BeatTimingResult, double>[] callbacks,
 		double toleranceSeconds)
 	{
 		if (bpm <= 0)
@@ -100,7 +100,7 @@ public sealed class BeatTimingManager
 			result = BeatTimingResult.Late;
 		}
 
-		_callbacks[_nextIndex]?.Invoke(result);
+		_callbacks[_nextIndex]?.Invoke(result, delta);
 		_nextIndex++;
 	}
 
@@ -118,7 +118,7 @@ public sealed class BeatTimingManager
 
 		if (delta > 2 * _toleranceSeconds)
 		{
-			_callbacks[_nextIndex]?.Invoke(BeatTimingResult.TooLate);
+			_callbacks[_nextIndex]?.Invoke(BeatTimingResult.TooLate, delta);
 			_nextIndex++;
 		}
 	}

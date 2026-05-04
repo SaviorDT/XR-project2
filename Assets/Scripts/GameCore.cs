@@ -3,21 +3,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GameCore : MonoBehaviour
+public class GameCore
 {
 	[SerializeField] private float _toleranceSeconds = 0.1f;
+	[SerializeField] private int score = 0;
 	private TempoTemplate _tempoTemplate;
 	private BeatTimingManager _beatTimingManager;
-	private TutorTimingManager _tutorTimingManager;
+	private BackendTimingManager _backendTimingManager;
 	private CancellationTokenSource _tickCts;
 
-	public void Initialize(TempoTemplate tempoTemplate)
+	public GameCore(TempoTemplate tempoTemplate)
 	{
 		_tempoTemplate = tempoTemplate;
 	}
 
-	private void Start()
+	public void Start()
 	{
+		InitializeTempo();
+		HookUserInput();
+		StartTickLoop();
+	}
+
+	private void InitializeTempo()
+	{
+		
 		if (_tempoTemplate == null)
 		{
 			Debug.LogError("GameCore needs a TempoTemplate. Call Initialize before Start.");
@@ -26,28 +35,35 @@ public class GameCore : MonoBehaviour
 
 		var mainBeats = new System.Collections.Generic.List<double>();
 		var mainActions = new System.Collections.Generic.List<TempoEventType>();
-		var mainCallbacks = new System.Collections.Generic.List<Action<BeatTimingResult>>();
-		var tutorBeats = new System.Collections.Generic.List<double>();
-		var tutorEvents = new System.Collections.Generic.List<TempoEventType>();
-		var tutorCallbacks = new System.Collections.Generic.List<Action<TempoEventType>>();
+		var mainCallbacks = new System.Collections.Generic.List<Action<BeatTimingResult, double>>();
+		var backendBeats = new System.Collections.Generic.List<double>();
+		var backendCallbacks = new System.Collections.Generic.List<Action>();
 
-		foreach (var tempoEvent in _tempoTemplate.events)
+		foreach (var tempoBatch in _tempoTemplate.events)
 		{
-			double beatTime = tempoEvent.Key;
-			TempoEventType eventType = tempoEvent.Value;
-
-			if (eventType == TempoEventType.roll || eventType == TempoEventType.cut || eventType == TempoEventType.put || eventType == TempoEventType.send)
+			if (tempoBatch?.events == null)
 			{
-				mainBeats.Add(beatTime);
-				mainActions.Add(eventType);
-				TempoEventType capturedType = eventType;
-				mainCallbacks.Add(result => OnBeatResult(capturedType, result));
+				continue;
 			}
-			else
+
+			foreach (var tempoEvent in tempoBatch.events)
 			{
-				tutorBeats.Add(beatTime);
-				tutorEvents.Add(eventType);
-				tutorCallbacks.Add(evt => OnTutorEvent(evt));
+				double beatTime = tempoEvent.Key;
+				TempoBatchEventType eventType = tempoEvent.Value;
+
+				if (eventType == TempoBatchEventType.player_input)
+				{
+					TempoEventType capturedAction = tempoBatch.tempoEventType;
+					mainBeats.Add(beatTime);
+					mainActions.Add(capturedAction);
+					mainCallbacks.Add((result, delta) => OnBeatResult(capturedAction, result, delta));
+				}
+				else
+				{
+					TempoBatch capturedBatch = tempoBatch;
+					backendBeats.Add(beatTime);
+					backendCallbacks.Add(() => OnBackendEvent(capturedBatch, eventType));
+				}
 			}
 		}
 
@@ -58,13 +74,69 @@ public class GameCore : MonoBehaviour
 			mainCallbacks.ToArray(),
 			_toleranceSeconds);
 
-		_tutorTimingManager = new TutorTimingManager(
+		_backendTimingManager = new BackendTimingManager(
 			_tempoTemplate.bpm,
-			tutorBeats.ToArray(),
-			tutorEvents.ToArray(),
-			tutorCallbacks.ToArray());
+			backendBeats.ToArray(),
+			backendCallbacks.ToArray());
+	}
 
-		StartTickLoop();
+    private void HookUserInput()
+	{
+		DrumStickSwingDetector cutDetector = FindSingleDetector<DrumStickSwingDetector>("DrumStickSwingDetector");
+		if (cutDetector == null)
+		{
+			Debug.LogWarning("No DrumStickSwingDetector found in the scene.");
+		}
+		else
+		{
+			cutDetector.SetCallback(() => OnInput(TempoEventType.cut));
+		}
+
+		PizzaThrowDetector pizzaThrowDetector = FindSingleDetector<PizzaThrowDetector>("PizzaThrowDetector");
+		if (pizzaThrowDetector == null)
+		{
+			Debug.LogWarning("No PizzaThrowDetector found in the scene.");
+		}
+		else
+		{
+			pizzaThrowDetector.SetCallback(() => OnInput(TempoEventType.send));
+		}
+
+		RollingPinDetector rollingPinDetector = FindSingleDetector<RollingPinDetector>("RollingPinDetector");
+		if (rollingPinDetector == null)
+		{
+			Debug.LogWarning("No RollingPinDetector found in the scene.");
+		}
+		else
+		{
+			rollingPinDetector.SetCallback(() => OnInput(TempoEventType.roll));
+		}
+
+		SprinkleDetector sprinkleDetector = FindSingleDetector<SprinkleDetector>("SprinkleDetector");
+		if (sprinkleDetector == null)
+		{
+			Debug.LogWarning("No SprinkleDetector found in the scene.");
+		}
+		else
+		{
+			sprinkleDetector.SetCallback(() => OnInput(TempoEventType.put));
+		}
+	}
+
+	private static T FindSingleDetector<T>(string detectorName) where T : UnityEngine.Object
+	{
+		T[] detectors = UnityEngine.Object.FindObjectsByType<T>(FindObjectsSortMode.None);
+		if (detectors == null || detectors.Length == 0)
+		{
+			return null;
+		}
+
+		if (detectors.Length > 1)
+		{
+			Debug.LogWarning($"Multiple {detectorName} found in the scene. Using the first one.");
+		}
+
+		return detectors[0];
 	}
 
 	private void StartTickLoop()
@@ -91,7 +163,7 @@ public class GameCore : MonoBehaviour
 	private void OnDestroy()
 	{
 		_tickCts?.Cancel();
-		_tutorTimingManager?.Stop();
+		_backendTimingManager?.Stop();
 	}
 
 	public void OnInput(TempoEventType action)
@@ -99,9 +171,11 @@ public class GameCore : MonoBehaviour
 		_beatTimingManager?.BeatInput(action);
 	}
 
-	private void OnBeatResult(TempoEventType eventType, BeatTimingResult result)
+	private void OnBeatResult(TempoEventType eventType, BeatTimingResult result, double deltaSeconds)
 	{
-		Debug.Log($"Beat '{eventType}': {result}");
+		double safeDeltaSeconds = Math.Max(Math.Abs(deltaSeconds), _toleranceSeconds / 4.136);
+		score += (int)(_toleranceSeconds / safeDeltaSeconds * 1000);
+		Debug.Log($"Beat '{eventType}': {result} ({deltaSeconds:0.000}s)");
 	}
 
 	private void OnRoll()
@@ -144,8 +218,9 @@ public class GameCore : MonoBehaviour
 		Debug.Log("TempoEventType: sendt");
 	}
 
-	private void OnTutorEvent(TempoEventType eventType)
+	private void OnBackendEvent(TempoBatch tempoBatch, TempoBatchEventType eventType)
 	{
-		Debug.Log($"Tutor event: {eventType}");
+		tempoBatch?.OnCallback(eventType);
+		Debug.Log($"Backend event: {eventType}");
 	}
 }

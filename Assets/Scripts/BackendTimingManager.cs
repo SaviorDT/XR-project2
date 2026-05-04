@@ -3,42 +3,39 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public sealed class TutorTimingManager
+public sealed class BackendTimingManager
 {
 	private readonly double _bpm;
 	private readonly double[] _beats;
-	private readonly TempoEventType[] _events;
-	private readonly Action<TempoEventType>[] _callbacks;
+	private readonly Action[] _callbacks;
 	private readonly double _startTime;
 	private readonly SynchronizationContext _context;
 	private readonly CancellationTokenSource _cts;
 	private int _nextIndex;
 
-	public TutorTimingManager(
+	public BackendTimingManager(
 		double bpm,
 		double[] beats,
-		TempoEventType[] events,
-		Action<TempoEventType>[] callbacks)
+		Action[] callbacks)
 	{
 		if (bpm <= 0)
 		{
 			throw new ArgumentOutOfRangeException(nameof(bpm), "BPM must be positive.");
 		}
 
-		if (beats == null || events == null || callbacks == null)
+		if (beats == null || callbacks == null)
 		{
-			string name = beats == null ? nameof(beats) : events == null ? nameof(events) : nameof(callbacks);
+			string name = beats == null ? nameof(beats) : nameof(callbacks);
 			throw new ArgumentNullException(name);
 		}
 
-		if (beats.Length != events.Length || beats.Length != callbacks.Length)
+		if (beats.Length != callbacks.Length)
 		{
-			throw new ArgumentException("beats, events, and callbacks must have the same length.");
+			throw new ArgumentException("beats and callbacks must have the same length.");
 		}
 
 		_bpm = bpm;
 		_beats = beats;
-		_events = events;
 		_callbacks = callbacks;
 		_startTime = Time.timeAsDouble;
 		_context = SynchronizationContext.Current;
@@ -49,7 +46,7 @@ public sealed class TutorTimingManager
 
 	public bool IsFinished => _nextIndex >= _beats.Length;
 
-	~TutorTimingManager()
+	~BackendTimingManager()
 	{
 		if (!_cts.IsCancellationRequested)
 		{
@@ -78,16 +75,15 @@ public sealed class TutorTimingManager
 			}
 
 			int index = _nextIndex;
-			TempoEventType evt = _events[index];
-			Action<TempoEventType> callback = _callbacks[index];
+			Action callback = _callbacks[index];
 
 			if (_context != null)
 			{
-				_context.Post(_ => callback?.Invoke(evt), null);
+				_context.Post(_ => callback?.Invoke(), null);
 			}
 			else
 			{
-				callback?.Invoke(evt);
+				callback?.Invoke();
 			}
 
 			_nextIndex++;
