@@ -6,7 +6,8 @@ using UnityEngine;
 public class GameCore
 {
 	[SerializeField] private float _toleranceSeconds = 0.1f;
-	[SerializeField] private int score = 0;
+	[SerializeField] private int score = 0, max_score = 100;
+	private AudioSource _musicSource;
 	private TempoTemplate _tempoTemplate;
 	private BeatTimingManager _beatTimingManager;
 	private BackendTimingManager _backendTimingManager;
@@ -15,11 +16,13 @@ public class GameCore
 	public GameCore(TempoTemplate tempoTemplate)
 	{
 		_tempoTemplate = tempoTemplate;
+		max_score = _tempoTemplate.maxScore;
 	}
 
 	public void Start()
 	{
 		InitializeTempo();
+		PlayMusic();
 		HookUserInput();
 		StartTickLoop();
 	}
@@ -58,12 +61,9 @@ public class GameCore
 					mainActions.Add(capturedAction);
 					mainCallbacks.Add((result, delta) => OnBeatResult(capturedAction, result, delta));
 				}
-				else
-				{
-					TempoBatch capturedBatch = tempoBatch;
-					backendBeats.Add(beatTime);
-					backendCallbacks.Add(() => OnBackendEvent(capturedBatch, eventType));
-				}
+				TempoBatch capturedBatch = tempoBatch;
+				backendBeats.Add(beatTime);
+				backendCallbacks.Add(() => OnBackendEvent(capturedBatch, eventType));
 			}
 		}
 
@@ -146,6 +146,32 @@ public class GameCore
 		_ = TickLoopAsync(_tickCts.Token);
 	}
 
+	private void PlayMusic()
+	{
+		AudioClip clip = _tempoTemplate?.music;
+		if (clip == null)
+		{
+			Debug.LogWarning("TempoTemplate music is null.");
+			return;
+		}
+
+		const string musicObjectName = "GameMusic";
+		GameObject musicObject = GameObject.Find(musicObjectName);
+		if (musicObject == null)
+		{
+			musicObject = new GameObject(musicObjectName);
+		}
+
+		_musicSource = musicObject.GetComponent<AudioSource>();
+		if (_musicSource == null)
+		{
+			_musicSource = musicObject.AddComponent<AudioSource>();
+		}
+
+		_musicSource.clip = clip;
+		_musicSource.Play();
+	}
+
 	private async Task TickLoopAsync(CancellationToken cancellationToken)
 	{
 		while (!cancellationToken.IsCancellationRequested)
@@ -173,9 +199,33 @@ public class GameCore
 
 	private void OnBeatResult(TempoEventType eventType, BeatTimingResult result, double deltaSeconds)
 	{
-		double safeDeltaSeconds = Math.Max(Math.Abs(deltaSeconds), _toleranceSeconds / 4.136);
-		score += (int)(_toleranceSeconds / safeDeltaSeconds * 1000);
-		Debug.Log($"Beat '{eventType}': {result} ({deltaSeconds:0.000}s)");
+		if (result != BeatTimingResult.TooLate)
+		{
+			bool hasReached1Star = score >= max_score * 0.75;
+			double safeDeltaSeconds = Math.Max(Math.Abs(deltaSeconds), _toleranceSeconds / 4.136);
+			score += (int)(_toleranceSeconds / safeDeltaSeconds * 1000);
+			AnimationController.Instance.UpdateScorebar((double)score / max_score);
+			if ((double) score / max_score >= 0.75 && !hasReached1Star) 
+			{
+				AnimationController.Instance.Play1StarEffect();
+			}
+
+			Debug.Log($"Beat '{eventType}': {result} ({deltaSeconds:0.000}s)");
+		}
+		
+		switch (result)
+		{
+			case BeatTimingResult.OnTime:
+				AnimationController.Instance.ShowPerfectInputEffect();
+				break;
+			case BeatTimingResult.Early:
+			case BeatTimingResult.Late:
+				AnimationController.Instance.ShowGoodInputEffect();
+				break;
+			case BeatTimingResult.TooLate:
+				AnimationController.Instance.ShowMissInputEffect();
+				break;
+		}
 	}
 
 	private void OnRoll()
@@ -220,7 +270,6 @@ public class GameCore
 
 	private void OnBackendEvent(TempoBatch tempoBatch, TempoBatchEventType eventType)
 	{
-		tempoBatch?.OnCallback(eventType);
-		Debug.Log($"Backend event: {eventType}");
+		tempoBatch.OnCallback(eventType);
 	}
 }

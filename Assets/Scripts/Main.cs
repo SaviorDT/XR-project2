@@ -22,7 +22,8 @@ public class Main : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(StartCountdown());
+        InitializeAnimationController();
+        StartCoroutine(StartGameAfterDelay(10f));
     }
 
     // Update is called once per frame
@@ -31,15 +32,20 @@ public class Main : MonoBehaviour
         
     }
 
-    private IEnumerator StartCountdown()
+    private IEnumerator StartGameAfterDelay(float seconds)
     {
-        const int countdownSeconds = 10;
-        for (int remaining = countdownSeconds; remaining > 0; remaining--)
-        {
-            Debug.Log($"Game starts in {remaining}...");
-            yield return new WaitForSeconds(1f);
-        }
-
+        yield return new WaitForSeconds(seconds);
         StartGame(new TestTempo());
+    }
+
+    private void InitializeAnimationController()
+    {
+        AnimationController ac = AnimationController.Instance;
+
+        GameObject scorebar = GameObject.Find("分數量表最終型");
+        GameObject oneStarEffect = GameObject.Find("Shine_ellow");
+        ac.SetScorebar(scorebar, oneStarEffect);
+
+        ac.UpdateScorebar(-0.3);
     }
 }

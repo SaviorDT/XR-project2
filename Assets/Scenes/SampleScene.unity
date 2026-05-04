@@ -7488,7 +7488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.943335
+      value: 24.94333
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b63a32c14360cb4582e7b9d77df73de, type: 3}
       propertyPath: m_LocalRotation.w
@@ -40809,7 +40809,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706201397}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -46235,14 +46235,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 3.203
       objectReference: {fileID: 0}
+    - target: {fileID: -8532684822659016025, guid: 70550d25bbd82a14b9df439a8b01b872, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 70550d25bbd82a14b9df439a8b01b872, type: 3}
       propertyPath: m_Name
       value: cucumber_Shaved_Half7777777704
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 70550d25bbd82a14b9df439a8b01b872, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 70550d25bbd82a14b9df439a8b01b872, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2112612189}
   m_SourcePrefab: {fileID: 100100000, guid: 70550d25bbd82a14b9df439a8b01b872, type: 3}
 --- !u!1 &1859559178
 GameObject:
@@ -50757,6 +50768,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2112411608}
   m_Mesh: {fileID: -4037627708576729015, guid: e11d9cbcb51649a4d8f186784d5a4f97, type: 3}
+--- !u!1 &2112612187 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 70550d25bbd82a14b9df439a8b01b872, type: 3}
+  m_PrefabInstance: {fileID: 1856143743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2112612189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112612187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd92ab8629f55c47ab80d8b7952e344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleController
 --- !u!1 &2116667741
 GameObject:
   m_ObjectHideFlags: 0
@@ -52658,7 +52686,7 @@ Transform:
   m_GameObject: {fileID: 6686131764530400260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.342, y: 0.827, z: 25.494692}
+  m_LocalPosition: {x: -29.342, y: 0.735, z: 25.494692}
   m_LocalScale: {x: 18.950891, y: 18.950891, z: 18.950891}
   m_ConstrainProportionsScale: 0
   m_Children:
