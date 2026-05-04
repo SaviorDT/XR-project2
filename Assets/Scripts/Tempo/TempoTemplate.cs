@@ -22,17 +22,31 @@ public enum TempoBatchEventType
 	end
 }
 
+public interface TempoBatchEventCallback
+{
+	public void OnStart(TempoEventType tempoEventType);
+	public void OnEnd();
+	public void OnGetToolt();
+	public void OnGetOffToolt();
+	public void OnGetTool();
+	public void OnGetOffTool();
+	public void OnTutorEvent();
+	public void OnPlayerInput();
+}
+
 public class TempoBatch
 {
 	public GameObject tool, target;
 	public TempoEventType tempoEventType;
-	public int repeatCount = 0, counter = 0, countert = 0;
+	public TempoBatchEventCallback callback;
+	public int repeatCount = 0;
 	public List<KeyValuePair<double, TempoBatchEventType>> events;
 
-	public TempoBatch(int repeatCount, TempoEventType tempoEventType, GameObject tool = null, GameObject target = null)
+	public TempoBatch(int repeatCount, TempoEventType tempoEventType, TempoBatchEventCallback callback, GameObject tool = null, GameObject target = null)
 	{
 		this.repeatCount = repeatCount;
 		this.tempoEventType = tempoEventType;
+		this.callback = callback;
 		this.tool = tool;
 		this.target = target;
 	}
@@ -47,44 +61,39 @@ public class TempoBatch
 		switch (eventType)
 		{
 			case TempoBatchEventType.start:
-				OnStart();
+				callback.OnStart(tempoEventType);
 				break;
 			case TempoBatchEventType.getToolt:
-				OnGetToolt();
+				callback.OnGetToolt();
 				break;
 			case TempoBatchEventType.getOffToolt:
-				OnGetOffToolt();
+				callback.OnGetOffToolt();
 				break;
 			case TempoBatchEventType.getTool:
-				OnGetTool();
+				callback.OnGetTool();
 				break;
 			case TempoBatchEventType.getOffTool:
-				OnGetOffTool();
+				callback.OnGetOffTool();
 				break;
 			case TempoBatchEventType.tutor:
-				OnTutorEvent();
+				callback.OnTutorEvent();
 				break;
 			case TempoBatchEventType.player_input:
-				OnPlayerInput();
+				callback.OnPlayerInput();
 				break;
 			case TempoBatchEventType.end:
-				OnEnd();
+				callback.OnEnd();
 				break;
 		}
 	}
-
-	private void OnStart() {Debug.Log("Start event triggered");}
-	private void OnEnd() {Debug.Log("End event triggered");}
-	private void OnGetToolt() {Debug.Log("GetToolt event triggered");}
-	private void OnGetOffToolt() {Debug.Log("GetOffToolt event triggered");}
-	private void OnGetTool() {Debug.Log("GetTool event triggered");}
-	private void OnGetOffTool() {Debug.Log("GetOffTool event triggered");}
-	private void OnTutorEvent() {Debug.Log("Tutor event triggered");}
-	private void OnPlayerInput() {Debug.Log("Player input event triggered");}
 }
 
 public interface TempoTemplate
 {
 	double bpm { get; }
+	int maxScore { get; }
+	AudioClip music { get; }
+	
 	List<TempoBatch> events { get; }
+	void SetOnEndCallback(Action callback);
 }
