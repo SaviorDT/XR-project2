@@ -169,7 +169,7 @@ public class TestTempo : TempoTemplate
 					AnimationController.Instance.SetPizzaPieces(GetPizza(), ++put_count);
 					break;
 				case TempoEventType.send:
-					Debug.Log("玩家對 Send 的輸入！");
+					AnimationController.Instance.SendPizza(GetPizza());
 					break;
 			}
 		}

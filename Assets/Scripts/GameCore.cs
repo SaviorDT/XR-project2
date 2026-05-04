@@ -25,6 +25,7 @@ public class GameCore
 		PlayMusic();
 		HookUserInput();
 		StartTickLoop();
+		StartBearTeacher();
 	}
 
 	private void InitializeTempo()
@@ -227,45 +228,24 @@ public class GameCore
 				break;
 		}
 	}
-
-	private void OnRoll()
+	private void StartBearTeacher()
 	{
-		Debug.Log("TempoEventType: roll");
-	}
+		GameObject bearTeacher = GameObject.Find("bear-teacher-hand-trynew02 (3)");
+		if (bearTeacher != null)
+		{
+			Animator animator = bearTeacher.GetComponent<Animator>();
+			if (animator == null)
+			{
+				Debug.LogWarning("bearTeacher is missing an Animator component.");
+				return;
+			}
 
-	private void OnCut()
-	{
-		Debug.Log("TempoEventType: cut");
-	}
-
-	private void OnPut()
-	{
-		Debug.Log("TempoEventType: put");
-	}
-
-	private void OnSend()
-	{
-		Debug.Log("TempoEventType: send");
-	}
-
-	private void OnRollt()
-	{
-		Debug.Log("TempoEventType: rollt");
-	}
-
-	private void OnCutt()
-	{
-		Debug.Log("TempoEventType: cutt");
-	}
-
-	private void OnPutt()
-	{
-		Debug.Log("TempoEventType: putt");
-	}
-
-	private void OnSendt()
-	{
-		Debug.Log("TempoEventType: sendt");
+			animator.SetTrigger("StartCooking");
+		}
+		else
+		{
+			Debug.LogWarning("No GameObject named 'BearTeacher' found in the scene.");
+		}
 	}
 
 	private void OnBackendEvent(TempoBatch tempoBatch, TempoBatchEventType eventType)
