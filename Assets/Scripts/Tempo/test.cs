@@ -95,7 +95,7 @@ public class TestTempo : TempoTemplate
 	private static AudioClip LoadMusic()
 	{
 #if UNITY_EDITOR
-		return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Margarito.mp3");
+		return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Margarito.wav");
 #else
 		return null;
 #endif
@@ -169,7 +169,7 @@ public class TestTempo : TempoTemplate
 					AnimationController.Instance.SetPizzaPieces(GetPizza(), ++put_count);
 					break;
 				case TempoEventType.send:
-					Debug.Log("玩家對 Send 的輸入！");
+					AnimationController.Instance.SendPizza(GetPizza());
 					break;
 			}
 		}
