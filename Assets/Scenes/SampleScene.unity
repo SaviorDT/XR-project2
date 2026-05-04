@@ -52193,6 +52193,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6305665954344474302}
+  - component: {fileID: 6686131764530400262}
+  - component: {fileID: 6686131764530400261}
   m_Layer: 0
   m_Name: Pizzaaa (4)
   m_TagString: Untagged
@@ -52200,6 +52202,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6686131764530400261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686131764530400260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
+  controllerAnchor: {fileID: 838053784}
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  detachPosition: {x: -29.342, y: 0.827, z: 25.49469}
+--- !u!114 &6686131764530400262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686131764530400260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7314c6575f129164286c0bf71fe51c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PizzaThrowDetector
+  throwThreshold: 2
+  horizontalDominance: 1.5
+  cooldownTime: 0.3
+  throwEndSpeedRatio: 0.5
+  centerEyeAnchor: {fileID: 506759869}
 --- !u!4 &6894240876692045337
 Transform:
   m_ObjectHideFlags: 0
@@ -52244,8 +52279,6 @@ GameObject:
   - component: {fileID: 9111363139773504194}
   - component: {fileID: 9121128133908401193}
   - component: {fileID: 1283163455241932090}
-  - component: {fileID: 9121128133908401194}
-  - component: {fileID: 9121128133908401195}
   m_Layer: 0
   m_Name: Dough
   m_TagString: Untagged
@@ -52385,39 +52418,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7327743040664168138}
   m_Mesh: {fileID: -4428754836550342530, guid: 2e85154595967924db925548c8a622f5, type: 3}
---- !u!114 &9121128133908401194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327743040664168138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoSnapToHand
-  controllerAnchor: {fileID: 838053784}
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: 0, y: 0, z: 0}
-  detachPosition: {x: 0, y: 0.001101433, z: 0}
---- !u!114 &9121128133908401195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7327743040664168138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7314c6575f129164286c0bf71fe51c4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PizzaThrowDetector
-  throwThreshold: 2
-  horizontalDominance: 1.5
-  cooldownTime: 0.3
-  throwEndSpeedRatio: 0.5
-  centerEyeAnchor: {fileID: 506759869}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
