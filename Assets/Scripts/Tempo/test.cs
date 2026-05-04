@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -11,6 +13,7 @@ public class TestTempo : TempoTemplate
 	public AudioClip music { get; } = LoadMusic();
 	public int maxScore { get; } = 50000;
 	private static TempoBatchEventHandler _eventHandler = new();
+	private static Action _onEndCallback;
 	public List<TempoBatch> events { get; } = new()
 	{
 		new TempoBatch(2, TempoEventType.roll, _eventHandler, GetRoller(), GetDough())
@@ -84,6 +87,11 @@ public class TestTempo : TempoTemplate
 			new (80, TempoBatchEventType.end)
 		})
 	};
+
+	void TempoTemplate.SetOnEndCallback(Action callback)
+	{
+		_onEndCallback = callback;
+	}
 
 	private static GameObject GetRoller() => GameObject.Find("roller");
 	private static GameObject GetDough() => GameObject.Find("dough (5)");
@@ -173,7 +181,13 @@ public class TestTempo : TempoTemplate
 					break;
 			}
 		}
-		public void OnEnd() => Debug.Log("事件結束！");
+		public void OnEnd()
+		{
+			if (_currentAction == TempoEventType.send)
+			{
+				_onEndCallback?.Invoke();
+			}
+		}
 
 		private static T FindSingleDetector<T>(string detectorName) where T : UnityEngine.Object
 		{
