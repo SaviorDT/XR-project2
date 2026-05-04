@@ -45,15 +45,12 @@ public class AnimationController
     }
     public void ShowPerfectInputEffect()
     {
-        SpawnTestParticle(new Color(1f, 0.9f, 0.2f));
     }
     public void ShowGoodInputEffect()
     {
-        SpawnTestParticle(new Color(0.2f, 1f, 0.5f));
     }
     public void ShowMissInputEffect()
     {
-        SpawnTestParticle(new Color(1f, 0.2f, 0.2f));
     }
     public void Play1StarEffect() 
     {
@@ -116,7 +113,6 @@ public class AnimationController
         for (int i = 0; i < 9; i++)
         {
             pizza.transform.GetChild(i).gameObject.SetActive(false);
-            Debug.Log($"隱藏 {pizza.transform.GetChild(i).name}");
         }
 
         SimpleController mover = pizza.GetComponent<SimpleController>();
@@ -146,29 +142,14 @@ public class AnimationController
         mover.MoveTo(new Vector3(-28.2313995f, 1.38800001f, 28.9249992f), 0.5f, SimpleController.CommandOption.Queue);
         mover.RotateTo(new Vector3(0f, 1440f, 0f), 0.5f, SimpleController.CommandOption.Queue);
     }
-
-    private void SpawnTestParticle(Color startColor)
+    public void SetFinalScore(GameObject scoreTextField, GameObject hat, int score, double scorePercentage)
     {
-        Vector3 position = new Vector3(-29.3419991f, 0.833000004f, 25.4946918f);
-        GameObject effect = new GameObject("InputEffect_Test");
-        effect.transform.position = position;
+        double maxHatScale = 3.5;
+        double hatScale = scorePercentage * maxHatScale;
 
-        ParticleSystem ps = effect.AddComponent<ParticleSystem>();
-        ParticleSystem.MainModule main = ps.main;
-        main.playOnAwake = false;
-        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        main.startColor = startColor;
-        main.startLifetime = 0.5f;
-        main.startSpeed = 1.5f;
-        main.startSize = 0.4f;
-        main.duration = 0.5f;
-        main.loop = false;
+        scoreTextField.GetComponent<ScoreTextFieldController>().SetScore(score, 4.0);
+        hat.GetComponent<HatScaleController>().SetScale(hatScale, 4.0);
 
-        ParticleSystem.EmissionModule emission = ps.emission;
-        emission.rateOverTime = 0f;
-        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 30) });
 
-        ps.Play();
-        Object.Destroy(effect, 0.6f);
     }
 }

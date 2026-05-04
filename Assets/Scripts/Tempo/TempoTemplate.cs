@@ -91,8 +91,9 @@ public class TempoBatch
 public interface TempoTemplate
 {
 	double bpm { get; }
+	int maxScore { get; }
 	AudioClip music { get; }
 	
 	List<TempoBatch> events { get; }
-	int maxScore { get; }
+	void SetOnEndCallback(Action callback);
 }
