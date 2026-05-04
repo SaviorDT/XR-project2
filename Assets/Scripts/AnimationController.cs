@@ -81,11 +81,9 @@ public class AnimationController
     public void ShowCucumber(GameObject cucumber)
     {
         if (cucumber == null) return;
-        Transform[] slices = cucumber.GetComponentsInChildren<Transform>(true);
-        int maxHide = Mathf.Min(7, slices.Length - 1);
-        for (int i = 1; i <= maxHide; i++)
+        for (int i = 0; i < 7; i++)
         {
-            slices[i].gameObject.SetActive(false);
+            cucumber.transform.GetChild(i).gameObject.SetActive(false);
         }
 
         SimpleController mover = cucumber.GetComponent<SimpleController>();
@@ -105,12 +103,10 @@ public class AnimationController
     public void SetCucumberSlices(GameObject cucumber, int sliceCount)
     {
         if (cucumber == null) return;
-        Transform[] slices = cucumber.GetComponentsInChildren<Transform>(true);
-        int maxShow = Mathf.Min(sliceCount, slices.Length - 1);
 
-        for (int i = 1; i <= maxShow + 1; i++)
+        for (int i = 1; i <= sliceCount; i++)
         {
-            slices[i].gameObject.SetActive(true);
+            cucumber.transform.GetChild(i).gameObject.SetActive(true);
         }
     }
     public void ShowPizza(GameObject pizza)
@@ -136,6 +132,19 @@ public class AnimationController
         {
             pizza.transform.GetChild(i).gameObject.SetActive(true);
         }
+    }
+    public void SendPizza(GameObject pizza)
+    {
+        if (pizza == null) return;
+
+        SimpleController mover = pizza.GetComponent<SimpleController>();
+        if (mover == null) mover = pizza.AddComponent<SimpleController>();
+
+        mover.MoveTo(new Vector3(-28.2313995f, 1.38800001f, 28.6140003f), 0.8f);
+        mover.RotateTo(new Vector3(0f, 1080f, 0f), 0.8f);
+
+        mover.MoveTo(new Vector3(-28.2313995f, 1.38800001f, 28.9249992f), 0.5f, SimpleController.CommandOption.Queue);
+        mover.RotateTo(new Vector3(0f, 1440f, 0f), 0.5f, SimpleController.CommandOption.Queue);
     }
 
     private void SpawnTestParticle(Color startColor)
