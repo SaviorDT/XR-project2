@@ -296,7 +296,7 @@ public class GameCore
 		SceneManager.UnloadSceneAsync("SampleScene");
 	}
 
-	private void OnFinalSceneLoaded(Scene scene, LoadSceneMode mode)
+	private async void OnFinalSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		if (scene.name != "FinalScene")
 		{
@@ -316,5 +316,18 @@ public class GameCore
 			GameObject.Find("Hat"),
 			score,
 			(double)score / max_score);
+
+		await Task.Delay(10000);
+		AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync("FinalScene");
+		if (unloadOperation != null)
+		{
+			while (!unloadOperation.isDone)
+			{
+				await Task.Yield();
+			}
+		}
+
+		_finalSceneLoaded = false;
+		SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
 	}
 }
