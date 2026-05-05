@@ -35,8 +35,6 @@ public class HatScaleController : MonoBehaviour
         transform.localScale = scale;
         UpdatePositionToKeepBottom(bottomWorld, localHeight, newY);
 
-        Debug.Log($"Scaling hat: elapsed={scaleElapsed:F2}s, t={t:F2}, newY={newY:F2}");
-
         if (t >= 1f)
         {
             isScaling = false;
@@ -56,8 +54,6 @@ public class HatScaleController : MonoBehaviour
         startScale.y = 0f;
         transform.localScale = startScale;
         UpdatePositionToKeepBottom(bottomWorld, localHeight, 0f);
-
-        Debug.Log($"Starting hat scale animation: targetScaleY={targetScaleY}, duration={scaleDuration}s, localHeight={localHeight}");
 
         isScaling = true;
     }
