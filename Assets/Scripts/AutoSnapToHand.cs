@@ -3,10 +3,10 @@ using UnityEngine;
 public class AutoSnapToHand : MonoBehaviour
 {
     [Header("=== 吸附設定 ===")]
-    [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > RightHandAnchor")]
+    [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > RightControllerAnchor")]
     [SerializeField] private Transform controllerAnchor;
 
-    [Tooltip("物件相對於手把的位置偏移")]
+    [Tooltip("物件相對於手把的位置偏移（手把的局部空間）")]
     [SerializeField] private Vector3 positionOffset = Vector3.zero;
 
     [Tooltip("物件相對於手把的旋轉偏移")]
@@ -18,29 +18,16 @@ public class AutoSnapToHand : MonoBehaviour
 
     public bool IsSnapped { get; private set; }
 
-    // =====================
-    //   Unity 生命週期
-    // =====================
-
     void Update()
     {
-        if (!IsSnapped) return;
-        if (controllerAnchor == null) return;
+        if (!IsSnapped || controllerAnchor == null) return;
 
-        transform.position = controllerAnchor.position
-            + controllerAnchor.TransformDirection(positionOffset);
-
-        transform.rotation = controllerAnchor.rotation
-            * Quaternion.Euler(rotationOffset);
+        // 先算出最終旋轉，再用它決定位移方向
+        Quaternion finalRotation = controllerAnchor.rotation * Quaternion.Euler(rotationOffset);
+        transform.rotation = finalRotation;
+        transform.position = controllerAnchor.position + finalRotation * positionOffset;
     }
 
-    // =====================
-    //   公開方法（接 UnityEvent）
-    // =====================
-
-    /// <summary>
-    /// 吸附到手上，可接在任意 UnityEvent
-    /// </summary>
     public void SnapToHand()
     {
         if (controllerAnchor == null)
@@ -53,9 +40,6 @@ public class AutoSnapToHand : MonoBehaviour
         Debug.Log("[AutoSnapToHand] 物件已吸附到手上");
     }
 
-    /// <summary>
-    /// 從手上脫離，可接在任意 UnityEvent
-    /// </summary>
     public void DetachFromHand()
     {
         IsSnapped = false;
