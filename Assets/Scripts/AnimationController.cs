@@ -109,7 +109,7 @@ public class AnimationController
     {
         if (cucumber == null) return;
 
-        for (int i = 1; i <= sliceCount; i++)
+        for (int i = 0; i <= sliceCount; i++)
         {
             cucumber.transform.GetChild(i).gameObject.SetActive(true);
         }
@@ -155,8 +155,8 @@ public class AnimationController
         double maxHatScale = 3.5;
         double hatScale = scorePercentage * maxHatScale;
 
-        scoreTextField.GetComponent<ScoreTextFieldController>().SetScore(score, 4.0);
-        hat.GetComponent<HatScaleController>().SetScale(hatScale, 4.0);
+        scoreTextField.GetComponent<ScoreTextFieldController>().SetScore(score, 3.5);
+        hat.GetComponent<HatScaleController>().SetScale(hatScale, 3.5);
 
 
     }

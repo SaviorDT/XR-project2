@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 public class GameCore
 {
@@ -126,6 +129,56 @@ public class GameCore
 		else
 		{
 			sprinkleDetector.SetCallback(() => OnInput(TempoEventType.put));
+		}
+
+		GameObject debugInputObject = GameObject.Find("DebugInputListener");
+		if (debugInputObject == null)
+		{
+			debugInputObject = new GameObject("DebugInputListener");
+		}
+
+		DebugInputListener listener = debugInputObject.GetComponent<DebugInputListener>();
+		if (listener == null)
+		{
+			listener = debugInputObject.AddComponent<DebugInputListener>();
+		}
+
+		listener.SetTarget(this);
+	}
+
+	private class DebugInputListener : MonoBehaviour
+	{
+		private GameCore _target;
+
+		public void SetTarget(GameCore target)
+		{
+			_target = target;
+		}
+
+		private void Update()
+		{
+			if (_target == null)
+			{
+				return;
+			}
+
+			if (IsDebugKeyPressed())
+			{
+				_target.OnInput(TempoEventType.cut);
+				_target.OnInput(TempoEventType.send);
+				_target.OnInput(TempoEventType.roll);
+				_target.OnInput(TempoEventType.put);
+			}
+		}
+
+		private static bool IsDebugKeyPressed()
+		{
+#if ENABLE_INPUT_SYSTEM
+			Keyboard keyboard = Keyboard.current;
+			return keyboard != null && keyboard.dKey.wasPressedThisFrame;
+#else
+			return Input.GetKeyDown(KeyCode.D);
+#endif
 		}
 	}
 
