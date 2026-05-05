@@ -53,6 +53,7 @@ public class GameCore
 
 		foreach (var tempoBatch in _tempoTemplate.events)
 		{
+			TempoBatch capturedBatch = tempoBatch;
 			if (tempoBatch?.events == null)
 			{
 				continue;
@@ -68,9 +69,8 @@ public class GameCore
 					TempoEventType capturedAction = tempoBatch.tempoEventType;
 					mainBeats.Add(beatTime);
 					mainActions.Add(capturedAction);
-					mainCallbacks.Add((result, delta) => OnBeatResult(capturedAction, result, delta));
+					mainCallbacks.Add((result, delta) => OnBeatResult(capturedAction, result, delta, capturedBatch));
 				}
-				TempoBatch capturedBatch = tempoBatch;
 				backendBeats.Add(beatTime);
 				backendCallbacks.Add(() => OnBackendEvent(capturedBatch, eventType));
 			}
@@ -256,9 +256,9 @@ public class GameCore
 		_beatTimingManager?.BeatInput(action);
 	}
 
-	private void OnBeatResult(TempoEventType eventType, BeatTimingResult result, double deltaSeconds)
+	private void OnBeatResult(TempoEventType eventType, BeatTimingResult result, double deltaSeconds, TempoBatch batch)
 	{
-		if (result != BeatTimingResult.TooLate)
+		if (result != BeatTimingResult.TooLate && result != BeatTimingResult.TooEarly)
 		{
 			bool hasReached1Star = score >= max_score * 0.75;
 			double safeDeltaSeconds = Math.Max(Math.Abs(deltaSeconds), _toleranceSeconds / 4.136);
@@ -270,6 +270,8 @@ public class GameCore
 			}
 
 			Debug.Log($"Beat '{eventType}': {result} ({deltaSeconds:0.000}s)");
+
+			batch.OnCallback(TempoBatchEventType.player_input);
 		}
 		
 		switch (result)
@@ -288,6 +290,7 @@ public class GameCore
 				combo = Math.Max(combo, current_combo);
 				break;
 			case BeatTimingResult.TooLate:
+			case BeatTimingResult.TooEarly:
 				AnimationController.Instance.ShowMissInputEffect();
 				badCount++;
 				current_combo = 0;
@@ -301,7 +304,10 @@ public class GameCore
 
 	private void OnBackendEvent(TempoBatch tempoBatch, TempoBatchEventType eventType)
 	{
-		tempoBatch.OnCallback(eventType);
+		if (eventType != TempoBatchEventType.player_input)
+		{
+			tempoBatch.OnCallback(eventType);
+		}
 	}
 
 	private void SetText(string objectName, string label, int value)
