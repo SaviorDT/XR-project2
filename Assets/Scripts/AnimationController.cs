@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 
 public class AnimationController
 {
     private static readonly AnimationController _instance = new();
     private GameObject _scorebar, _1StarEffect;
+
+    public event Action PerfectInputEffectRequested;
+    public event Action GoodInputEffectRequested;
+    public event Action MissInputEffectRequested;
 
     public static AnimationController Instance => _instance;
 
@@ -45,12 +50,15 @@ public class AnimationController
     }
     public void ShowPerfectInputEffect()
     {
+        PerfectInputEffectRequested?.Invoke();
     }
     public void ShowGoodInputEffect()
     {
+        GoodInputEffectRequested?.Invoke();
     }
     public void ShowMissInputEffect()
     {
+        MissInputEffectRequested?.Invoke();
     }
     public void Play1StarEffect() 
     {

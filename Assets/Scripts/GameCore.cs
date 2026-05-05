@@ -7,6 +7,7 @@ using TMPro;
 
 public class GameCore
 {
+	public static event Action StartBearTeacherEvent;
 	[SerializeField] private float _toleranceSeconds = 0.1f;
 	[SerializeField] private int score = 0, max_score = 100, combo = 0, current_combo, perfectCount = 0, goodCount = 0, badCount = 0;
 	private AudioSource _musicSource;
@@ -242,22 +243,7 @@ public class GameCore
 	}
 	private void StartBearTeacher()
 	{
-		GameObject bearTeacher = GameObject.Find("bear-teacher-hand-trynew02 (3)");
-		if (bearTeacher != null)
-		{
-			Animator animator = bearTeacher.GetComponent<Animator>();
-			if (animator == null)
-			{
-				Debug.LogWarning("bearTeacher is missing an Animator component.");
-				return;
-			}
-
-			animator.SetTrigger("StartCooking");
-		}
-		else
-		{
-			Debug.LogWarning("No GameObject named 'BearTeacher' found in the scene.");
-		}
+		StartBearTeacherEvent?.Invoke();
 	}
 
 	private void OnBackendEvent(TempoBatch tempoBatch, TempoBatchEventType eventType)
@@ -328,6 +314,6 @@ public class GameCore
 		}
 
 		_finalSceneLoaded = false;
-		SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+		SceneManager.LoadScene("SampleScene", LoadSceneMode.Additive);
 	}
 }
