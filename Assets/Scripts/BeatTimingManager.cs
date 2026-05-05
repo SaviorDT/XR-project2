@@ -82,7 +82,8 @@ public sealed class BeatTimingManager
 
 		if (delta > 2 * _toleranceSeconds)
 		{
-			throw new InvalidOperationException("BeatInput received too late; use Tick to handle missed beats.");
+			Debug.LogWarning("BeatInput received too late. Ignoring. Delta: " + delta);
+			return;
 		}
 
 		BeatTimingResult result;
