@@ -84,7 +84,7 @@ public class TestTempo : TempoTemplate
 			new (78, TempoBatchEventType.player_input),
 
 			new (80, TempoBatchEventType.getOffTool),
-			new (80, TempoBatchEventType.end)
+			new (92, TempoBatchEventType.end)
 		})
 	};
 
