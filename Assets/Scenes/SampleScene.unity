@@ -17179,6 +17179,28 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a3c6563d44045d64f990be098c1e6d62, type: 3}
   m_PrefabInstance: {fileID: 1892762419}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &596388512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596388506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79112454c3e8c734c8687808f2160054, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BearPizzaMaster
+  pizzaToppings:
+  - {fileID: 801753884}
+  - {fileID: 869562085}
+  - {fileID: 1790206075}
+  - {fileID: 261207647}
+  - {fileID: 463137041}
+  - {fileID: 1627497010}
+  - {fileID: 33512564}
+  - {fileID: 1074914170}
+  - {fileID: 1186350190}
 --- !u!1 &596533196
 GameObject:
   m_ObjectHideFlags: 0
@@ -48756,6 +48778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1737014707}
   - component: {fileID: 1737014706}
+  - component: {fileID: 1737014708}
   m_Layer: 0
   m_Name: Pizzaaa (5)
   m_TagString: Untagged
@@ -48810,6 +48833,28 @@ Transform:
   - {fileID: 1872151801}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1737014708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737014705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09054969dc27ecd45ab5ab552140c8f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PizzaToppingController
+  toppings:
+  - {fileID: 801753884}
+  - {fileID: 869562085}
+  - {fileID: 1790206075}
+  - {fileID: 261207647}
+  - {fileID: 463137041}
+  - {fileID: 1627497010}
+  - {fileID: 33512564}
+  - {fileID: 1074914170}
+  - {fileID: 1186350190}
 --- !u!1 &1737885773
 GameObject:
   m_ObjectHideFlags: 0
@@ -55301,6 +55346,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a3c6563d44045d64f990be098c1e6d62, type: 3}
       insertIndex: -1
       addedObject: {fileID: 596388509}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a3c6563d44045d64f990be098c1e6d62, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 596388512}
   m_SourcePrefab: {fileID: 100100000, guid: a3c6563d44045d64f990be098c1e6d62, type: 3}
 --- !u!1 &1895016357
 GameObject:
