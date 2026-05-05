@@ -1,37 +1,41 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DrumStickSwingDetector : MonoBehaviour
 {
     [Header("=== 揮動偵測參數 ===")]
-    [Tooltip("觸發揮動所需的最低速度（m/s）")]
-    [SerializeField] private float swingThreshold = 2.0f;
+    [Tooltip("觸發揮動所需的最低速度（建議 1.5~3.0）")]
+    [SerializeField] private float swingThreshold = 2.2f;
 
-    [Tooltip("速度方向與正下方的相似度閾值（-1~1，越高越嚴格）")]
-    [SerializeField] private float downwardAngleThreshold = 0.5f;
+    [Tooltip("下揮方向判定（1.0 是正下方，0.3~0.5 比較寬鬆）")]
+    [SerializeField] private float downwardAngleThreshold = 0.4f;
 
-    [Tooltip("兩次揮動之間的最短間隔（秒）")]
-    [SerializeField] private float cooldownTime = 0.3f;
+    [Tooltip("兩次揮動之間的最短間隔")]
+    [SerializeField] private float cooldownTime = 0.2f;
 
-    [Tooltip("速度降到此比例以下才算揮動結束")]
-    [SerializeField] private float swingEndSpeedRatio = 0.5f;
+    [Header("=== 進階優化 ===")]
+    [Range(0, 1)]
+    [Tooltip("速度平滑係數，越高越平穩但延遲越高")]
+    [SerializeField] private float velocitySmoothing = 0.7f;
 
-    [Header("=== Tempo 設定 ===")]
-    [Tooltip("此道具對應的 Tempo 事件類型")]
+    [Header("=== 外部引用 ===")]
+    [SerializeField] private GameCore gameCore;
     [SerializeField] private TempoEventType eventType = TempoEventType.cut;
 
-    // callback，由外部注入
-    private Action onSwingDetected;
+    public UnityEvent OnSwingDetected;
 
-    private bool isDetecting = false;
-    private bool swingInProgress = false;
+    private bool isDetecting = true;
+    private bool swingProcessed = false; // 確保單次揮擊只觸發一次
     private Vector3 previousPosition;
-    private Vector3 currentVelocity;
+    private Vector3 smoothedVelocity;
     private float lastSwingTime = -999f;
-
-    // =====================
-    //   Unity 生命週期
-    // =====================
+    
+    public void SetCallback(UnityAction callback)
+{
+    // 先移除舊的，避免重複綁定導致一次揮動觸發兩次
+    OnSwingDetected.RemoveListener(callback);
+    OnSwingDetected.AddListener(callback);
+}
 
     void Update()
     {
@@ -41,84 +45,63 @@ public class DrumStickSwingDetector : MonoBehaviour
         DetectDownSwing();
     }
 
-    // =====================
-    //   公開方法
-    // =====================
-
-    /// <summary>
-    /// 注入 callback，由呼叫者決定觸發後要做什麼
-    /// </summary>
-    public void SetCallback(Action callback)
-    {
-        onSwingDetected = callback;
-    }
-
-    /// <summary>
-    /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
-    /// </summary>
     public void StartDetecting()
     {
         isDetecting = true;
         previousPosition = transform.position;
-        ResetSwingState();
-        Debug.Log("[DrumStick] 開始偵測揮動");
+        smoothedVelocity = Vector3.zero;
+        swingProcessed = false;
+        Debug.Log("[DrumStick] 偵測開啟");
     }
 
-    /// <summary>
-    /// 停止偵測，接在 AutoSnapToHand.DetachFromHand() 之後
-    /// </summary>
     public void StopDetecting()
     {
         isDetecting = false;
-        ResetSwingState();
-        Debug.Log("[DrumStick] 停止偵測揮動");
+        swingProcessed = false;
     }
-
-    // =====================
-    //   速度計算
-    // =====================
 
     private void CalculateVelocity()
     {
-        currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
+        // 計算原始速度
+        Vector3 rawVelocity = (transform.position - previousPosition) / Time.deltaTime;
         previousPosition = transform.position;
-    }
 
-    // =====================
-    //   揮動偵測
-    // =====================
+        // 平滑處理速度，減少 VR 控制器震顫造成的誤判
+        smoothedVelocity = Vector3.Lerp(smoothedVelocity, rawVelocity, 1f - velocitySmoothing);
+    }
 
     private void DetectDownSwing()
     {
-        float speed = currentVelocity.magnitude;
-        float downwardDot = Vector3.Dot(currentVelocity.normalized, Vector3.down);
-        bool isMovingDown = downwardDot > downwardAngleThreshold;
+        float speed = smoothedVelocity.magnitude;
+        // 計算與世界坐標下方的夾角相似度
+        float downwardDot = Vector3.Dot(smoothedVelocity.normalized, Vector3.down);
 
-        // 1. 偵測揮動開始
-        if (!swingInProgress && speed > swingThreshold && isMovingDown)
+        // 偵測邏輯：
+        // 1. 速度超過閾值
+        // 2. 方向朝下
+        // 3. 冷卻時間已過
+        if (speed > swingThreshold && downwardDot > downwardAngleThreshold)
         {
-            swingInProgress = true;
-        }
-
-        // 2. 偵測揮動結束並觸發 callback
-        if (swingInProgress && speed < swingThreshold * swingEndSpeedRatio)
-        {
-            if (Time.time - lastSwingTime > cooldownTime)
+            if (!swingProcessed && Time.time - lastSwingTime > cooldownTime)
             {
-                lastSwingTime = Time.time;
-                onSwingDetected?.Invoke();
-                Debug.Log($"[DrumStick] 偵測到向下揮動！事件類型: {eventType}");
+                TriggerSwing();
             }
-            ResetSwingState();
+        }
+        else if (speed < swingThreshold * 0.5f)
+        {
+            // 當速度降下來，重置狀態，準備下一次揮擊
+            swingProcessed = false;
         }
     }
 
-    // =====================
-    //   工具方法
-    // =====================
-
-    private void ResetSwingState()
+    private void TriggerSwing()
     {
-        swingInProgress = false;
+        lastSwingTime = Time.time;
+        swingProcessed = true; // 標記已處理，直到速度放慢前不再重複觸發
+
+        OnSwingDetected?.Invoke();
+        gameCore?.OnInput(eventType);
+        
+        Debug.Log($"<color=cyan>[DrumStick]</color> 偵測到擊打！速度: {smoothedVelocity.magnitude:F2}");
     }
 }
