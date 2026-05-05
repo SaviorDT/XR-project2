@@ -35,7 +35,7 @@ public class Main : MonoBehaviour
     private IEnumerator StartGameAfterDelay(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        StartGame(new TestTempo());
+        StartGame(new TestTempoWithoutAudio());
     }
 
     private void InitializeAnimationController()

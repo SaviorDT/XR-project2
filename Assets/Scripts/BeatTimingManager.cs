@@ -75,7 +75,7 @@ public sealed class BeatTimingManager
 		double targetTime = GetBeatTimeSeconds(_beats[_nextIndex]);
 		double delta = now - targetTime;
 
-		if (delta < -2 * _toleranceSeconds)
+		if (delta < -3 * _toleranceSeconds)
 		{
 			return;
 		}
@@ -88,7 +88,11 @@ public sealed class BeatTimingManager
 
 		BeatTimingResult result;
 
-		if (delta < -_toleranceSeconds)
+		if (delta < -2 * _toleranceSeconds)
+		{
+			result = BeatTimingResult.TooEarly;
+		}
+		else if (delta < -_toleranceSeconds)
 		{
 			result = BeatTimingResult.Early;
 		}
