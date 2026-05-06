@@ -14647,7 +14647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: e47682b9-c270-40b1-b16d-90b627a5ce1b
-  instanceId: 472a6a7b-75bc-4eac-99dd-e4ecd87a4e7a
+  instanceId: db23dc87-37b1-4f1e-ab51-8c9b84d07670
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -16648,7 +16648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 81f55626-5fad-45e9-a1df-184f330da7ba
-  instanceId: 74eac315-0914-42bf-934a-fc32a1571081
+  instanceId: 7f55dc17-0eae-4cee-9b64-3fd273ea9f5d
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 2063f481-1b63-4eda-9ee8-a00df98536bc
@@ -22550,7 +22550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
-  instanceId: 2d790c80-c1d3-41a6-8bf8-7eb5c78c6549
+  instanceId: c0a2508b-0a50-4aec-908f-d98463e51d91
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -23223,7 +23223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 80aa2eb2-af2f-40a9-ad9e-18044ce65bee
-  instanceId: 752d1c9d-f87f-45d3-b2bf-cafef7df00b3
+  instanceId: 7a2d6583-e360-4871-9d83-7e64b75c0854
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -29001,7 +29001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
-  instanceId: df44f4de-eda6-4c1c-a4ce-cff9fbc29995
+  instanceId: eaa12032-2bc3-434c-9a4d-0af291955345
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -55649,7 +55649,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: a3c6563d44045d64f990be098c1e6d62, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 83f68534470269649bf6193688fc69d9, type: 2}
+      objectReference: {fileID: 9100000, guid: 5da2ef7f24df2794a9c2b4524f80841b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -57675,7 +57675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 5838e892-31a4-4f65-a415-dc108aefa14c
-  instanceId: 96d8f7a1-d95b-459c-9a0d-eb32f51c1dbd
+  instanceId: 3771b033-4a84-48e4-b747-afc486578636
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: c88fc9f2-e9d1-41ea-b937-cdaf92a806d0
