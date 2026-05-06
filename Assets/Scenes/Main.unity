@@ -590,7 +590,6 @@ GameObject:
   m_Component:
   - component: {fileID: 82109996}
   - component: {fileID: 82109998}
-  - component: {fileID: 82109997}
   - component: {fileID: 82109999}
   m_Layer: 0
   m_Name: PlayerStart
@@ -608,27 +607,13 @@ Transform:
   m_GameObject: {fileID: 82109995}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -35.01, y: 1.329, z: 25.547}
+  m_LocalPosition: {x: -37.034, y: 1.329, z: 25.547}
   m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 473003640}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &82109997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82109995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c794f91ef9b632744a195dff18ab41bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _playerMotionController: {fileID: 82109998}
-  _playerDelta: {fileID: 506759869}
 --- !u!114 &82109998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,8 +638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0776fa4e616f947b8a6b3596f208ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMotionManager
-  _playerMotionController: {fileID: 0}
-  _playerDelta: {fileID: 0}
+  _playerMotionController: {fileID: 82109998}
+  _playerDelta: {fileID: 506759869}
 --- !u!1 &103815014
 GameObject:
   m_ObjectHideFlags: 0
