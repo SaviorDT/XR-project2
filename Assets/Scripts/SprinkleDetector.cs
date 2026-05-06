@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SprinkleDetector : MonoBehaviour
 {
@@ -10,28 +10,35 @@ public class SprinkleDetector : MonoBehaviour
     [Tooltip("左右速度必須比前後和垂直速度大幾倍才算橫向揮動")]
     [SerializeField] private float sidewaysDominance = 1.5f;
 
-    [Tooltip("兩次揮動之間的最短間隔（秒）")]
+    [Tooltip("兩次揮動之間的最短間隔")]
     [SerializeField] private float cooldownTime = 0.3f;
 
-    [Tooltip("速度降到此比例以下才算揮動結束")]
-    [SerializeField] private float swingEndSpeedRatio = 0.5f;
+    [Header("=== 進階優化 ===")]
+    [Range(0, 1)]
+    [Tooltip("速度平滑係數")]
+    [SerializeField] private float velocitySmoothing = 0.7f;
 
     [Header("=== 參考物件 ===")]
     [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > CenterEyeAnchor")]
     [SerializeField] private Transform centerEyeAnchor;
 
-    // callback，由外部注入
-    private Action onSprinkleDetected;
+    [Header("=== 外部引用 ===")]
+    [SerializeField] private GameCore gameCore;
+    [SerializeField] private TempoEventType eventType = TempoEventType.put;
 
-    private bool isDetecting = false;
-    private bool swingInProgress = false;
+    public UnityEvent OnSprinkleDetected;
+
+    private bool isDetecting = true;
+    private bool swingProcessed = false;
     private Vector3 previousPosition;
-    private Vector3 currentVelocity;
+    private Vector3 smoothedVelocity;
     private float lastSwingTime = -999f;
 
-    // =====================
-    //   Unity 生命週期
-    // =====================
+    public void SetCallback(UnityAction callback)
+    {
+        OnSprinkleDetected.RemoveListener(callback);
+        OnSprinkleDetected.AddListener(callback);
+    }
 
     void Update()
     {
@@ -41,103 +48,71 @@ public class SprinkleDetector : MonoBehaviour
         DetectSideSwing();
     }
 
-    // =====================
-    //   公開方法
-    // =====================
-
-    /// <summary>
-    /// 注入 callback，由呼叫者決定觸發後要做什麼
-    /// </summary>
-    public void SetCallback(Action callback)
-    {
-        onSprinkleDetected = callback;
-    }
-
-    /// <summary>
-    /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
-    /// </summary>
     public void StartDetecting()
     {
         isDetecting = true;
         previousPosition = transform.position;
-        ResetSwingState();
-        Debug.Log("[Sprinkle] 開始偵測灑料揮動");
+        smoothedVelocity = Vector3.zero;
+        swingProcessed = false;
+        Debug.Log("<color=yellow>[Sprinkle]</color> 偵測開啟");
     }
 
-    /// <summary>
-    /// 停止偵測，接在 AutoSnapToHand.DetachFromHand() 之後
-    /// </summary>
     public void StopDetecting()
     {
         isDetecting = false;
-        ResetSwingState();
-        Debug.Log("[Sprinkle] 停止偵測灑料揮動");
+        swingProcessed = false;
+        Debug.Log("<color=yellow>[Sprinkle]</color> 偵測關閉");
     }
-
-    // =====================
-    //   速度計算
-    // =====================
 
     private void CalculateVelocity()
     {
-        currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
+        Vector3 rawVelocity = (transform.position - previousPosition) / Time.deltaTime;
         previousPosition = transform.position;
+        smoothedVelocity = Vector3.Lerp(smoothedVelocity, rawVelocity, 1f - velocitySmoothing);
     }
-
-    // =====================
-    //   左右揮動偵測（相對玩家面向）
-    // =====================
 
     private void DetectSideSwing()
     {
-        if (centerEyeAnchor == null)
-        {
-            Debug.LogWarning("[Sprinkle] centerEyeAnchor 未設定！");
-            return;
-        }
+        if (centerEyeAnchor == null) return;
 
-        float speed = currentVelocity.magnitude;
+        float speed = smoothedVelocity.magnitude;
 
-        // 取得玩家面向的水平前方與右方
+        // 取得玩家面向的水平參考軸
         Vector3 playerForward = centerEyeAnchor.forward;
         playerForward.y = 0f;
         playerForward.Normalize();
         Vector3 playerRight = Vector3.Cross(Vector3.up, playerForward);
 
-        // 把速度投影到左右軸、前後軸、垂直軸
-        float sidewaysSpeed = Mathf.Abs(Vector3.Dot(currentVelocity, playerRight));
-        float forwardSpeed = Mathf.Abs(Vector3.Dot(currentVelocity, playerForward));
-        float verticalSpeed = Mathf.Abs(currentVelocity.y);
+        // 投影速度分量
+        float sidewaysSpeed = Mathf.Abs(Vector3.Dot(smoothedVelocity, playerRight));
+        float forwardSpeed = Mathf.Abs(Vector3.Dot(smoothedVelocity, playerForward));
+        float verticalSpeed = Mathf.Abs(smoothedVelocity.y);
 
-        // 左右分量必須同時大於前後和垂直分量才算橫向揮動
+        // 判定是否為橫向揮動
         bool isSideways = sidewaysSpeed > forwardSpeed * sidewaysDominance
                        && sidewaysSpeed > verticalSpeed * sidewaysDominance;
 
-        // 1. 偵測揮動開始（左右任一方向都算）
-        if (!swingInProgress && speed > swingThreshold && isSideways)
+        if (speed > swingThreshold && isSideways)
         {
-            swingInProgress = true;
-        }
-
-        // 2. 偵測揮動結束並觸發 callback
-        if (swingInProgress && speed < swingThreshold * swingEndSpeedRatio)
-        {
-            if (Time.time - lastSwingTime > cooldownTime)
+            if (!swingProcessed && Time.time - lastSwingTime > cooldownTime)
             {
-                lastSwingTime = Time.time;
-                onSprinkleDetected?.Invoke();
-                Debug.Log("[Sprinkle] 偵測到左右揮動！");
+                TriggerSprinkle();
             }
-            ResetSwingState();
+        }
+        else if (speed < swingThreshold * 0.5f)
+        {
+            swingProcessed = false;
         }
     }
 
-    // =====================
-    //   工具方法
-    // =====================
-
-    private void ResetSwingState()
+    private void TriggerSprinkle()
     {
-        swingInProgress = false;
+        lastSwingTime = Time.time;
+        swingProcessed = true;
+
+        OnSprinkleDetected?.Invoke();
+        gameCore?.OnInput(eventType);
+        
+        Debug.Log($"<color=yellow>[Sprinkle]</color> 偵測到橫向灑料！速度: {smoothedVelocity.magnitude:F2}");
     }
 }

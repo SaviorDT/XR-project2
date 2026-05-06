@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PizzaThrowDetector : MonoBehaviour
 {
@@ -13,131 +13,106 @@ public class PizzaThrowDetector : MonoBehaviour
     [Tooltip("兩次投擲之間的最短間隔（秒）")]
     [SerializeField] private float cooldownTime = 0.3f;
 
-    [Tooltip("速度降到此比例以下才算揮舞結束")]
-    [SerializeField] private float throwEndSpeedRatio = 0.5f;
+    [Header("=== 進階優化 ===")]
+    [Range(0, 1)]
+    [Tooltip("速度平滑係數")]
+    [SerializeField] private float velocitySmoothing = 0.7f;
 
     [Header("=== 參考物件 ===")]
     [Tooltip("拖入 [BuildingBlock] Camera Rig > TrackingSpace > CenterEyeAnchor")]
     [SerializeField] private Transform centerEyeAnchor;
 
-    // callback，由外部注入
-    private Action onThrowDetected;
+    [Header("=== 外部引用 ===")]
+    [SerializeField] private GameCore gameCore;
+    [SerializeField] private TempoEventType eventType = TempoEventType.send; // 依照要求改為 send
+
+    public UnityEvent OnThrowDetected;
 
     private bool isDetecting = false;
-    private bool throwInProgress = false;
+    private bool throwProcessed = false; 
     private Vector3 previousPosition;
-    private Vector3 currentVelocity;
+    private Vector3 smoothedVelocity;
     private float lastThrowTime = -999f;
 
-    // =====================
-    //   Unity 生命週期
-    // =====================
+    public void SetCallback(UnityAction callback)
+    {
+        OnThrowDetected.RemoveListener(callback);
+        OnThrowDetected.AddListener(callback);
+    }
 
     void Update()
     {
         if (!isDetecting) return;
 
         CalculateVelocity();
-        DetectThrow();
+        DetectLeftwardThrow();
     }
 
-    // =====================
-    //   公開方法
-    // =====================
-
-    /// <summary>
-    /// 注入 callback，由呼叫者決定觸發後要做什麼
-    /// </summary>
-    public void SetCallback(Action callback)
-    {
-        onThrowDetected = callback;
-    }
-
-    /// <summary>
-    /// 開始偵測，接在 AutoSnapToHand.SnapToHand() 之後
-    /// </summary>
     public void StartDetecting()
     {
         isDetecting = true;
         previousPosition = transform.position;
-        ResetThrowState();
-        Debug.Log("[PizzaThrow] 開始偵測投擲");
+        smoothedVelocity = Vector3.zero;
+        throwProcessed = false;
+        Debug.Log("<color=red>[PizzaThrow]</color> 偵測開啟");
     }
 
-    /// <summary>
-    /// 停止偵測，接在 AutoSnapToHand.DetachFromHand() 之後
-    /// </summary>
     public void StopDetecting()
     {
         isDetecting = false;
-        ResetThrowState();
-        Debug.Log("[PizzaThrow] 停止偵測投擲");
+        throwProcessed = false;
+        Debug.Log("<color=red>[PizzaThrow]</color> 偵測關閉");
     }
-
-    // =====================
-    //   速度計算
-    // =====================
 
     private void CalculateVelocity()
     {
-        currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
+        Vector3 rawVelocity = (transform.position - previousPosition) / Time.deltaTime;
         previousPosition = transform.position;
+        smoothedVelocity = Vector3.Lerp(smoothedVelocity, rawVelocity, 1f - velocitySmoothing);
     }
 
-    // =====================
-    //   橫向揮舞偵測（相對玩家面向的右→左）
-    // =====================
-
-    private void DetectThrow()
+    private void DetectLeftwardThrow()
     {
-        if (centerEyeAnchor == null)
-        {
-            Debug.LogWarning("[PizzaThrow] centerEyeAnchor 未設定！");
-            return;
-        }
+        if (centerEyeAnchor == null) return;
 
-        float speed = currentVelocity.magnitude;
+        float speed = smoothedVelocity.magnitude;
 
-        // 取得玩家面向的水平右方向（忽略Y軸傾斜）
+        // 取得玩家面向的水平參考軸
         Vector3 playerForward = centerEyeAnchor.forward;
         playerForward.y = 0f;
         playerForward.Normalize();
         Vector3 playerRight = Vector3.Cross(Vector3.up, playerForward);
 
-        // 把速度投影到玩家的左右軸和垂直軸
-        float rightwardSpeed = Vector3.Dot(currentVelocity, playerRight); // 正值=向右，負值=向左
-        float verticalSpeed = Mathf.Abs(currentVelocity.y);
-        float horizontalSpeed = new Vector2(currentVelocity.x, currentVelocity.z).magnitude;
+        // 投影速度分量
+        float rightwardSpeed = Vector3.Dot(smoothedVelocity, playerRight); // 正值=向右，負值=向左
+        float verticalSpeed = Mathf.Abs(smoothedVelocity.y);
+        float horizontalSpeed = new Vector2(smoothedVelocity.x, smoothedVelocity.z).magnitude;
 
-        // 確認是橫向移動且相對玩家往左
+        // 判定判定條件：水平主導且方向向左[cite: 6]
         bool isHorizontal = horizontalSpeed > verticalSpeed * horizontalDominance;
         bool isLeftward = rightwardSpeed < 0;
 
-        // 1. 偵測揮舞開始
-        if (!throwInProgress && speed > throwThreshold && isHorizontal && isLeftward)
+        if (speed > throwThreshold && isHorizontal && isLeftward)
         {
-            throwInProgress = true;
-        }
-
-        // 2. 偵測揮舞結束並觸發 callback
-        if (throwInProgress && speed < throwThreshold * throwEndSpeedRatio)
-        {
-            if (Time.time - lastThrowTime > cooldownTime)
+            if (!throwProcessed && Time.time - lastThrowTime > cooldownTime)
             {
-                lastThrowTime = Time.time;
-                onThrowDetected?.Invoke();
-                Debug.Log("[PizzaThrow] 偵測到右向左揮舞！");
+                TriggerThrow();
             }
-            ResetThrowState();
+        }
+        else if (speed < throwThreshold * 0.5f)
+        {
+            throwProcessed = false;
         }
     }
 
-    // =====================
-    //   工具方法
-    // =====================
-
-    private void ResetThrowState()
+    private void TriggerThrow()
     {
-        throwInProgress = false;
+        lastThrowTime = Time.time;
+        throwProcessed = true;
+
+        OnThrowDetected?.Invoke();
+        gameCore?.OnInput(eventType);
+        
+        Debug.Log($"<color=red>[PizzaThrow]</color> 偵測到右至左投擲！速度: {smoothedVelocity.magnitude:F2}");
     }
 }
