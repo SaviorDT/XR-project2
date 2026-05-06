@@ -624,10 +624,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 82109995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c794f91ef9b632744a195dff18ab41bf, type: 3}
+  m_Script: {fileID: 11500000, guid: a7a083c43c4b10e4384ce205c8845d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _playerMotionController: {fileID: 82109998}
+  _playerMotionController: {fileID: 82109999}
   _playerDelta: {fileID: 506759869}
 --- !u!114 &82109998
 MonoBehaviour:
@@ -650,11 +650,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 82109995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0776fa4e616f947b8a6b3596f208ee, type: 3}
+  m_Script: {fileID: 11500000, guid: bcd92ab8629f55c47ab80d8b7952e344, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMotionManager
-  _playerMotionController: {fileID: 0}
-  _playerDelta: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleController
 --- !u!1 &103815014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,7 +2655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: e47682b9-c270-40b1-b16d-90b627a5ce1b
-  instanceId: 7ed83fd6-8353-48dc-8e3b-2c6917b2e7a8
+  instanceId: 472a6a7b-75bc-4eac-99dd-e4ecd87a4e7a
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -3243,7 +3241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 81f55626-5fad-45e9-a1df-184f330da7ba
-  instanceId: 6b94bac5-6a50-40fc-bff7-bed4cb1ac5ac
+  instanceId: 74eac315-0914-42bf-934a-fc32a1571081
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 2063f481-1b63-4eda-9ee8-a00df98536bc
@@ -4550,7 +4548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
-  instanceId: 76f58c15-8019-4a2d-a8e8-02f272ccc3dc
+  instanceId: 2d790c80-c1d3-41a6-8bf8-7eb5c78c6549
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -5016,7 +5014,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 838053784}
-  - component: {fileID: 838053785}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -5042,53 +5039,6 @@ Transform:
   - {fileID: 1886758318}
   m_Father: {fileID: 46713882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &838053785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 838053783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7482a2cce277b544ba29c71ee2b6453e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CombinedGestureDetector
-  drumSwingThreshold: 2.2
-  drumDownwardAngleThreshold: 0.4
-  drumCooldownTime: 0.2
-  drumVelocitySmoothing: 0.7
-  drumEventType: 1
-  OnDrumSwingDetected:
-    m_PersistentCalls:
-      m_Calls: []
-  pizzaThrowThreshold: 2
-  pizzaHorizontalDominance: 1.5
-  pizzaCooldownTime: 0.3
-  pizzaVelocitySmoothing: 0.7
-  pizzaCenterEyeAnchor: {fileID: 0}
-  pizzaEventType: 3
-  OnPizzaThrowDetected:
-    m_PersistentCalls:
-      m_Calls: []
-  rollingRequiredDistance: 0.15
-  rollingMinSpeedThreshold: 0.05
-  rollingForwardDominance: 1.5
-  rollingSnapIgnoreDuration: 0.2
-  rollingVelocitySmoothing: 0.5
-  rollingEventType: 0
-  OnRollDetected:
-    m_PersistentCalls:
-      m_Calls: []
-  sprinkleSwingThreshold: 2
-  sprinkleSidewaysDominance: 1.5
-  sprinkleCooldownTime: 0.3
-  sprinkleVelocitySmoothing: 0.7
-  sprinkleCenterEyeAnchor: {fileID: 0}
-  sprinkleEventType: 2
-  OnSprinkleDetected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &842827480
 GameObject:
   m_ObjectHideFlags: 0
@@ -5799,7 +5749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
   blockId: 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
-  instanceId: 32f7f4e2-761a-407e-a5fc-db80dec76a13
+  instanceId: df44f4de-eda6-4c1c-a4ce-cff9fbc29995
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
