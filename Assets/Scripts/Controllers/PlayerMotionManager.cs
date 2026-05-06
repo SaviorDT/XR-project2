@@ -41,7 +41,7 @@ public class PlayerMotionManager : MonoBehaviour
     }
     private void HandleReturnMainScene()
     {
-        _playerMotionController.MoveTo(new Vector3(-35.0099983f, 1.329f, 25.5470009f), 0.5f);
+        _playerMotionController.MoveTo(new Vector3(-37.0340004f, 1.329f, 25.5470009f), 0.5f);
         _playerMotionController.RotateTo(new Vector3(0, 90, 0), 0.1f);
     }
 }

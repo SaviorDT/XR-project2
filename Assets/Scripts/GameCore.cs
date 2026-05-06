@@ -30,14 +30,14 @@ public class GameCore
 
 	public void Start()
 	{
-		InitializeTempo();
 		PlayMusic();
+		StartBearTeacher();
+		InitializeTempo();
 		HookUserInput();
 		// MovePlayer();
 		StartTickLoop();
-		StartBearTeacher();
-		
 		OnGameStart?.Invoke();
+		
 	}
 
 	private void InitializeTempo()
@@ -284,6 +284,11 @@ public class GameCore
 
 	private void OnBeatResult(TempoEventType eventType, BeatTimingResult result, double deltaSeconds, TempoBatch batch)
 	{
+		if (eventType == TempoEventType.send && result != BeatTimingResult.OnTime)
+		{
+			result = BeatTimingResult.OnTime;
+			deltaSeconds = 0.99 * _toleranceSeconds;
+		}
 		if (result != BeatTimingResult.TooLate && result != BeatTimingResult.TooEarly)
 		{
 			bool hasReached1Star = score >= max_score * 0.75;
