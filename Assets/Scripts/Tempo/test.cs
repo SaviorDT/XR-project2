@@ -27,8 +27,8 @@ public class TestTempo : TempoTemplate
 			new (12, TempoBatchEventType.tutor),
 			new (16, TempoBatchEventType.getOffToolt),
 			
-			new (16.5, TempoBatchEventType.player_input),
-			new (20.5, TempoBatchEventType.player_input),
+			new (16.25, TempoBatchEventType.player_input),
+			new (20.25, TempoBatchEventType.player_input),
 
 			new (24, TempoBatchEventType.getOffTool),
 			new (24, TempoBatchEventType.end)
@@ -41,12 +41,12 @@ public class TestTempo : TempoTemplate
 
 			new (26, TempoBatchEventType.getTool),
 			
-			new (32.5, TempoBatchEventType.player_input),
-			new (33.5, TempoBatchEventType.player_input),
-			new (34.5, TempoBatchEventType.player_input),
-			new (35.5, TempoBatchEventType.player_input),
-			new (36.5, TempoBatchEventType.player_input),
-			new (37.5, TempoBatchEventType.player_input),
+			new (32.25, TempoBatchEventType.player_input),
+			new (33.25, TempoBatchEventType.player_input),
+			new (34.25, TempoBatchEventType.player_input),
+			new (35.25, TempoBatchEventType.player_input),
+			new (36.25, TempoBatchEventType.player_input),
+			new (37.25, TempoBatchEventType.player_input),
 
 			new (38, TempoBatchEventType.getOffTool),
 			new (38, TempoBatchEventType.end)
@@ -59,16 +59,16 @@ public class TestTempo : TempoTemplate
 
 			new (42, TempoBatchEventType.getTool),
 			
-			new (50.5, TempoBatchEventType.player_input),
-			new (51.5, TempoBatchEventType.player_input),
-			new (52.5, TempoBatchEventType.player_input),
-			new (53.5, TempoBatchEventType.player_input),
-			new (54.5, TempoBatchEventType.player_input),
+			new (50.25, TempoBatchEventType.player_input),
+			new (51.25, TempoBatchEventType.player_input),
+			new (52.25, TempoBatchEventType.player_input),
+			new (53.25, TempoBatchEventType.player_input),
+			new (54.25, TempoBatchEventType.player_input),
 
-			new (66.5, TempoBatchEventType.player_input),
-			new (68.5, TempoBatchEventType.player_input),
-			new (69.5, TempoBatchEventType.player_input),
-			new (70.5, TempoBatchEventType.player_input),
+			new (66.25, TempoBatchEventType.player_input),
+			new (68.25, TempoBatchEventType.player_input),
+			new (69.25, TempoBatchEventType.player_input),
+			new (70.25, TempoBatchEventType.player_input),
 
 			new (72, TempoBatchEventType.getOffTool),
 			new (72, TempoBatchEventType.end)
@@ -81,7 +81,7 @@ public class TestTempo : TempoTemplate
 
 			new (74, TempoBatchEventType.getTool),
 			
-			new (78.5, TempoBatchEventType.player_input),
+			new (78.25, TempoBatchEventType.player_input),
 
 			new (80, TempoBatchEventType.getOffTool),
 			new (92, TempoBatchEventType.end)
