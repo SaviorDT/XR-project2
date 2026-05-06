@@ -23189,9 +23189,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d376240d064f4484e81824d51391caf3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.ControllerButtonsMapper
   _buttonClickActions:
-  - Title: 
+  - Title: cut
     Button: 0
     ButtonMode: 0
     InputActionReference: {fileID: 0}
