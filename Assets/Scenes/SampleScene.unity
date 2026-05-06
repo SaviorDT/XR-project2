@@ -8847,7 +8847,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234987674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69658184ee3871643b0053b9c011b9c6, type: 3}
   m_Name: 
@@ -8867,7 +8867,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234987674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6583c08a26b1b7f468df1ab411f600ce, type: 3}
   m_Name: 
@@ -15951,9 +15951,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RollingPinDetector
   requiredDistance: 0.15
   minSpeedThreshold: 0.05
-  snapIgnoreDuration: 0.2
   forwardDominance: 1.5
-  centerEyeAnchor: {fileID: 506759869}
+  snapIgnoreDuration: 0.2
+  velocitySmoothing: 0.5
+  eventType: 0
+  OnRollDetected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &524375487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24597,6 +24601,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 838053784}
+  - component: {fileID: 838053785}
+  - component: {fileID: 838053786}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -24622,6 +24628,47 @@ Transform:
   - {fileID: 1886758318}
   m_Father: {fileID: 46713882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &838053785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838053783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69658184ee3871643b0053b9c011b9c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrumStickSwingDetector
+  swingThreshold: 2.2
+  downwardAngleThreshold: 0.4
+  cooldownTime: 0.2
+  velocitySmoothing: 0.7
+  eventType: 1
+  OnSwingDetected:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &838053786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838053783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9785065429ad144eba9f9456d3ec462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RollingPinDetector
+  requiredDistance: 0.1
+  minSpeedThreshold: 0.05
+  forwardDominance: 4
+  snapIgnoreDuration: 0.2
+  velocitySmoothing: 0.5
+  eventType: 0
+  OnRollDetected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &841361795
 GameObject:
   m_ObjectHideFlags: 0
@@ -65868,7 +65915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6341425142038101716, guid: dbd3cca44493ab34b9c6611b7f6d26d9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.13
+      value: -0.2670464
       objectReference: {fileID: 0}
     - target: {fileID: 6341425142038101716, guid: dbd3cca44493ab34b9c6611b7f6d26d9, type: 3}
       propertyPath: m_AnchoredPosition.y
