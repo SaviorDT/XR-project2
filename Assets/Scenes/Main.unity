@@ -5195,33 +5195,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7482a2cce277b544ba29c71ee2b6453e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombinedGestureDetector
-  drumSwingThreshold: 2
-  drumDownwardAngleThreshold: 0.1
-  drumCooldownTime: 0.01
-  drumVelocitySmoothing: 0.7
+  drumSwingThreshold: 1
+  drumDownwardAngleThreshold: 0.3
+  drumCooldownTime: 0.1
+  drumVelocitySmoothing: 0
   drumEventType: 1
   OnDrumSwingDetected:
     m_PersistentCalls:
       m_Calls: []
-  pizzaThrowThreshold: 2
-  pizzaHorizontalDominance: 1.5
-  pizzaCooldownTime: 0.3
-  pizzaVelocitySmoothing: 0.7
+  pizzaThrowThreshold: 1
+  pizzaHorizontalDominance: 2
+  pizzaCooldownTime: 0.1
+  pizzaVelocitySmoothing: 0
   pizzaCenterEyeAnchor: {fileID: 0}
   pizzaEventType: 3
   OnPizzaThrowDetected:
     m_PersistentCalls:
       m_Calls: []
-  rollingRequiredDistance: 0.5
+  rollingRequiredDistance: 0.1
   rollingMinSpeedThreshold: 0.1
   rollingForwardDominance: 3
   rollingSnapIgnoreDuration: 0.2
-  rollingVelocitySmoothing: 0.5
+  rollingVelocitySmoothing: 0
   rollingEventType: 0
   OnRollDetected:
     m_PersistentCalls:
       m_Calls: []
-  sprinkleSwingThreshold: 1.5
+  sprinkleSwingThreshold: 0.5
   sprinkleSidewaysDominance: 1.5
   sprinkleCooldownTime: 0.05
   sprinkleVelocitySmoothing: 0.7

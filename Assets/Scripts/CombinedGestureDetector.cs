@@ -30,7 +30,6 @@ public class CombinedGestureDetector : MonoBehaviour
     public UnityEvent OnDrumSwingDetected;
 
     // 私有狀態 — DrumStick
-    private bool   drumSwingProcessed = false;
     private float  drumLastSwingTime  = -999f;
     private Vector3 drumPreviousPosition;
     private Vector3 drumSmoothedVelocity;
@@ -117,7 +116,6 @@ public class CombinedGestureDetector : MonoBehaviour
     public UnityEvent OnSprinkleDetected;
 
     // 私有狀態 — Sprinkle
-    private bool   sprinkleSwingProcessed = false;
     private float  sprinkleLastSwingTime  = -999f;
     private Vector3 sprinklePreviousPosition;
     private Vector3 sprinkleSmoothedVelocity;
@@ -205,20 +203,15 @@ public class CombinedGestureDetector : MonoBehaviour
 
         if (speed > drumSwingThreshold && downwardDot > drumDownwardAngleThreshold)
         {
-            if (!drumSwingProcessed && Time.time - drumLastSwingTime > drumCooldownTime)
+            if (Time.time - drumLastSwingTime > drumCooldownTime)
             {
                 drumLastSwingTime   = Time.time;
-                drumSwingProcessed  = true;
 
                 OnDrumSwingDetected?.Invoke();
                 gameCore?.OnInput(drumEventType);
 
                 Debug.Log($"<color=cyan>[DrumStick]</color> 偵測到擊打！速度: {drumSmoothedVelocity.magnitude:F2}");
             }
-        }
-        else if (speed < drumSwingThreshold * 0.5f)
-        {
-            drumSwingProcessed = false;
         }
     }
 
@@ -344,28 +337,23 @@ public class CombinedGestureDetector : MonoBehaviour
         Vector3 playerRight = Vector3.Cross(Vector3.up, playerForward);
 
         float sidewaysSpeed = Mathf.Abs(Vector3.Dot(sprinkleSmoothedVelocity, playerRight));
-        float forwardSpeed  = Mathf.Abs(Vector3.Dot(sprinkleSmoothedVelocity, playerForward));
-        float verticalSpeed = Mathf.Abs(sprinkleSmoothedVelocity.y);
+        // float forwardSpeed  = Mathf.Abs(Vector3.Dot(sprinkleSmoothedVelocity, playerForward));
+        // float verticalSpeed = Mathf.Abs(sprinkleSmoothedVelocity.y);
 
-        bool isSideways = sidewaysSpeed > forwardSpeed  * sprinkleSidewaysDominance
-                       && sidewaysSpeed > verticalSpeed * sprinkleSidewaysDominance;
+        // bool isSideways = sidewaysSpeed > forwardSpeed  * sprinkleSidewaysDominance
+        //                && sidewaysSpeed > verticalSpeed * sprinkleSidewaysDominance;
 
-        if (speed > sprinkleSwingThreshold && isSideways)
+        if (sidewaysSpeed > sprinkleSwingThreshold)
         {
-            if (!sprinkleSwingProcessed && Time.time - sprinkleLastSwingTime > sprinkleCooldownTime)
+            if (Time.time - sprinkleLastSwingTime > sprinkleCooldownTime)
             {
                 sprinkleLastSwingTime   = Time.time;
-                sprinkleSwingProcessed  = true;
 
                 OnSprinkleDetected?.Invoke();
                 gameCore?.OnInput(sprinkleEventType);
 
                 Debug.Log($"<color=yellow>[Sprinkle]</color> 偵測到橫向灑料！速度: {sprinkleSmoothedVelocity.magnitude:F2}");
             }
-        }
-        else if (speed < sprinkleSwingThreshold * 0.5f)
-        {
-            sprinkleSwingProcessed = false;
         }
     }
 }

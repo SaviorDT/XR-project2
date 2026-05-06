@@ -61,10 +61,6 @@ public sealed class BeatTimingManager
 
 	public void BeatInput(TempoEventType action)
 	{
-		double now = Time.timeAsDouble;
-		double targetTime = GetBeatTimeSeconds(_beats[_nextIndex]);
-		double delta = now - targetTime;
-		Debug.Log($"BeatInput received. Action: {action}, Beat: {now/0.5625:F3}");
 		
 		if (IsFinished)
 		{
@@ -76,6 +72,10 @@ public sealed class BeatTimingManager
 			return;
 		}
 
+		double now = Time.timeAsDouble;
+		double targetTime = GetBeatTimeSeconds(_beats[_nextIndex]);
+		double delta = now - targetTime;
+		Debug.Log($"BeatInput received. Action: {action}, Beat: {(now-GetBeatTimeSeconds(0))/0.5625:F3}");
 
 		if (delta < -3 * _toleranceSeconds)
 		{
