@@ -4,6 +4,7 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     private GameCore _gameCore;
+    [SerializeField] private KeyInputController _keyInputController;
     public void StartGame(TempoTemplate template)
     {
         if (template == null)
@@ -23,7 +24,8 @@ public class Main : MonoBehaviour
     void Start()
     {
         InitializeAnimationController();
-        StartCoroutine(StartGameAfterDelay(10f));
+        _keyInputController.SetStartCallback(InvokeGameStart);
+        // StartCoroutine(StartGameAfterDelay(10f));
     }
 
     // Update is called once per frame
@@ -45,5 +47,9 @@ public class Main : MonoBehaviour
         GameObject scorebar = GameObject.Find("分數量表最終型");
         GameObject oneStarEffect = GameObject.Find("Shine_ellow");
         ac.SetScorebar(scorebar, oneStarEffect);
+    }
+    public void InvokeGameStart()
+    {
+        StartGame(new TestTempoWithoutAudio()); 
     }
 }

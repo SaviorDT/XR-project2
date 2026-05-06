@@ -32,6 +32,7 @@ public class GameCore
 		InitializeTempo();
 		PlayMusic();
 		HookUserInput();
+		MovePlayer();
 		StartTickLoop();
 		StartBearTeacher();
 	}
@@ -144,6 +145,28 @@ public class GameCore
 		}
 
 		listener.SetTarget(this);
+
+		GameObject keyInputObject = GameObject.Find("Main");
+		if (keyInputObject != null)
+		{
+			KeyInputController keyInputController = keyInputObject.GetComponent<KeyInputController>();
+			if (keyInputController != null)
+			{
+				keyInputController.SetCallback(OnInput);
+			}
+		}
+	}
+
+	private void MovePlayer()
+	{
+		GameObject player = GameObject.Find("PlayerStart");
+		if (player == null)
+		{
+			Debug.LogWarning("No GameObject named 'Player' found in the scene.");
+			return;
+		}
+
+		player.transform.position = new Vector3(-30.4039993f, 1.329f, 25.5470009f);
 	}
 
 	private class DebugInputListener : MonoBehaviour
@@ -365,7 +388,7 @@ public class GameCore
 			GameObject.Find("Score"),
 			GameObject.Find("Hat"),
 			score,
-			(double)score / max_score);
+			(double)Math.Max(score, 0) / max_score);
 
 		await Task.Delay(10000);
 		AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync("FinalScene");
