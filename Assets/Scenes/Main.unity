@@ -5014,6 +5014,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 838053784}
+  - component: {fileID: 838053785}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -5039,6 +5040,53 @@ Transform:
   - {fileID: 1886758318}
   m_Father: {fileID: 46713882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &838053785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838053783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7482a2cce277b544ba29c71ee2b6453e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombinedGestureDetector
+  drumSwingThreshold: 2.2
+  drumDownwardAngleThreshold: 0.4
+  drumCooldownTime: 0.2
+  drumVelocitySmoothing: 0.7
+  drumEventType: 1
+  OnDrumSwingDetected:
+    m_PersistentCalls:
+      m_Calls: []
+  pizzaThrowThreshold: 2
+  pizzaHorizontalDominance: 1.5
+  pizzaCooldownTime: 0.3
+  pizzaVelocitySmoothing: 0.7
+  pizzaCenterEyeAnchor: {fileID: 506759869}
+  pizzaEventType: 3
+  OnPizzaThrowDetected:
+    m_PersistentCalls:
+      m_Calls: []
+  rollingRequiredDistance: 0.15
+  rollingMinSpeedThreshold: 0.05
+  rollingForwardDominance: 1.5
+  rollingSnapIgnoreDuration: 0.2
+  rollingVelocitySmoothing: 0.5
+  rollingEventType: 0
+  OnRollDetected:
+    m_PersistentCalls:
+      m_Calls: []
+  sprinkleSwingThreshold: 2
+  sprinkleSidewaysDominance: 1.5
+  sprinkleCooldownTime: 0.3
+  sprinkleVelocitySmoothing: 0.7
+  sprinkleCenterEyeAnchor: {fileID: 506759869}
+  sprinkleEventType: 2
+  OnSprinkleDetected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &842827480
 GameObject:
   m_ObjectHideFlags: 0
