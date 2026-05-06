@@ -5,6 +5,7 @@ public class Main : MonoBehaviour
 {
     private GameCore _gameCore;
     [SerializeField] private KeyInputController _keyInputController;
+    [SerializeField] private CombinedGestureDetector _combinedGestureDetector;
     public void StartGame(TempoTemplate template)
     {
         if (template == null)
@@ -18,6 +19,7 @@ public class Main : MonoBehaviour
         }
         _gameCore = new GameCore(template);
         _gameCore.Start();
+        _combinedGestureDetector.SetGameCoreReference(_gameCore);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

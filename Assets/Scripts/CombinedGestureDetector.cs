@@ -132,6 +132,10 @@ public class CombinedGestureDetector : MonoBehaviour
     //   Unity 生命週期
     // =========================================================
 
+    public void SetGameCoreReference(GameCore core)
+    {
+        gameCore = core;
+    }
     private void Start()
     {
         // 初始化各偵測器的位置基準
