@@ -591,6 +591,7 @@ GameObject:
   - component: {fileID: 82109996}
   - component: {fileID: 82109998}
   - component: {fileID: 82109997}
+  - component: {fileID: 82109999}
   m_Layer: 0
   m_Name: PlayerStart
   m_TagString: Untagged
@@ -623,12 +624,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 82109995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c794f91ef9b632744a195dff18ab41bf, type: 3}
+  m_Script: {fileID: 11500000, guid: a7a083c43c4b10e4384ce205c8845d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _playerMotionController: {fileID: 82109998}
+  _playerMotionController: {fileID: 82109999}
   _playerDelta: {fileID: 506759869}
 --- !u!114 &82109998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82109995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd92ab8629f55c47ab80d8b7952e344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleController
+--- !u!114 &82109999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
