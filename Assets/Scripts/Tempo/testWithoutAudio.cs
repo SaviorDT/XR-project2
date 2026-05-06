@@ -12,81 +12,88 @@ public class TestTempoWithoutAudio : TempoTemplate
 	public double bpm { get; } = 135;
 	public AudioClip music { get; } = LoadMusic();
 	public int maxScore { get; } = 50000;
-	private static TempoBatchEventHandler _eventHandler = new();
+	private TempoBatchEventHandler _eventHandler = new();
+	public List<TempoBatch> events { get; }
 	private static Action _onEndCallback;
-	public List<TempoBatch> events { get; } = new()
+
+	public TestTempoWithoutAudio()
 	{
-		new TempoBatch(2, TempoEventType.roll, _eventHandler, GetRoller(), GetDough())
-		.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
+		_eventHandler = new TempoBatchEventHandler();
+		events = new List<TempoBatch>
 		{
-			new (0.0, TempoBatchEventType.start),
-			new (2, TempoBatchEventType.getToolt),
-			new (2, TempoBatchEventType.getTool),
+			new TempoBatch(2, TempoEventType.roll, _eventHandler, GetRoller(), GetDough())
+			.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
+			{
+				new (0.0, TempoBatchEventType.start),
+				new (2, TempoBatchEventType.getToolt),
+				new (2, TempoBatchEventType.getTool),
 
-			new (8, TempoBatchEventType.tutor),
-			new (12, TempoBatchEventType.tutor),
-			new (16, TempoBatchEventType.getOffToolt),
-			
-			new (16, TempoBatchEventType.player_input),
-			new (20, TempoBatchEventType.player_input),
+				new (8, TempoBatchEventType.tutor),
+				new (12, TempoBatchEventType.tutor),
+				new (16, TempoBatchEventType.getOffToolt),
+				
+				new (16, TempoBatchEventType.player_input),
+				new (20, TempoBatchEventType.player_input),
 
-			new (24, TempoBatchEventType.getOffTool),
-			new (24, TempoBatchEventType.end)
-		}),
+				new (24, TempoBatchEventType.getOffTool),
+				new (24, TempoBatchEventType.end)
+			}),
 
-		new TempoBatch(6, TempoEventType.cut, _eventHandler, GetKnife(), GetCucumber())
-		.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
-		{
-			new (24, TempoBatchEventType.start),
+			new TempoBatch(6, TempoEventType.cut, _eventHandler, GetKnife(), GetCucumber())
+			.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
+			{
+				new (24, TempoBatchEventType.start),
 
-			new (26, TempoBatchEventType.getTool),
-			
-			new (32.25, TempoBatchEventType.player_input),
-			new (33.25, TempoBatchEventType.player_input),
-			new (34.25, TempoBatchEventType.player_input),
-			new (35.25, TempoBatchEventType.player_input),
-			new (36.25, TempoBatchEventType.player_input),
-			new (37.25, TempoBatchEventType.player_input),
+				new (26, TempoBatchEventType.getTool),
+				
+				new (32.25, TempoBatchEventType.player_input),
+				new (33.25, TempoBatchEventType.player_input),
+				new (34.25, TempoBatchEventType.player_input),
+				new (35.25, TempoBatchEventType.player_input),
+				new (36.25, TempoBatchEventType.player_input),
+				new (37.25, TempoBatchEventType.player_input),
 
-			new (38, TempoBatchEventType.getOffTool),
-			new (38, TempoBatchEventType.end)
-		}),
+				new (38, TempoBatchEventType.getOffTool),
+				new (38, TempoBatchEventType.end)
+			}),
 
-		new TempoBatch(9, TempoEventType.put, _eventHandler, GetBowl(), GetPizza())
-		.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
-		{
-			new (40, TempoBatchEventType.start),
+			new TempoBatch(9, TempoEventType.put, _eventHandler, GetBowl(), GetPizza())
+			.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
+			{
+				new (40, TempoBatchEventType.start),
 
-			new (42, TempoBatchEventType.getTool),
-			
-			new (50.25, TempoBatchEventType.player_input),
-			new (51.25, TempoBatchEventType.player_input),
-			new (52.25, TempoBatchEventType.player_input),
-			new (53.25, TempoBatchEventType.player_input),
-			new (54.25, TempoBatchEventType.player_input),
+				new (42, TempoBatchEventType.getTool),
+				
+				new (50.25, TempoBatchEventType.player_input),
+				new (51.25, TempoBatchEventType.player_input),
+				new (52.25, TempoBatchEventType.player_input),
+				new (53.25, TempoBatchEventType.player_input),
+				new (54.25, TempoBatchEventType.player_input),
 
-			new (66.25, TempoBatchEventType.player_input),
-			new (68.25, TempoBatchEventType.player_input),
-			new (69.25, TempoBatchEventType.player_input),
-			new (70.25, TempoBatchEventType.player_input),
+				new (66.25, TempoBatchEventType.player_input),
+				new (68.25, TempoBatchEventType.player_input),
+				new (69.25, TempoBatchEventType.player_input),
+				new (70.25, TempoBatchEventType.player_input),
 
-			new (72, TempoBatchEventType.getOffTool),
-			new (72, TempoBatchEventType.end)
-		}),
+				new (72, TempoBatchEventType.getOffTool),
+				new (72, TempoBatchEventType.end)
+			}),
 
-		new TempoBatch(1, TempoEventType.send, _eventHandler, GetPizza())
-		.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
-		{
-			new (72, TempoBatchEventType.start),
+			new TempoBatch(1, TempoEventType.send, _eventHandler, GetPizza())
+			.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
+			{
+				new (72, TempoBatchEventType.start),
 
-			new (74, TempoBatchEventType.getTool),
-			
-			new (78, TempoBatchEventType.player_input),
+				new (74, TempoBatchEventType.getTool),
+				
+				new (78, TempoBatchEventType.player_input),
 
-			new (80, TempoBatchEventType.getOffTool),
-			new (92, TempoBatchEventType.end)
-		})
-	};
+				new (80, TempoBatchEventType.getOffTool),
+				new (92, TempoBatchEventType.end)
+			})
+		};
+	}
+	
 
 	void TempoTemplate.SetOnEndCallback(Action callback)
 	{
