@@ -74,6 +74,7 @@ public sealed class BeatTimingManager
 		double now = Time.timeAsDouble;
 		double targetTime = GetBeatTimeSeconds(_beats[_nextIndex]);
 		double delta = now - targetTime;
+		Debug.Log($"BeatInput received. Action: {action}, Beat: {now/0.5625:F3}");
 
 		if (delta < -3 * _toleranceSeconds)
 		{
