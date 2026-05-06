@@ -45,7 +45,5 @@ public class Main : MonoBehaviour
         GameObject scorebar = GameObject.Find("分數量表最終型");
         GameObject oneStarEffect = GameObject.Find("Shine_ellow");
         ac.SetScorebar(scorebar, oneStarEffect);
-
-        ac.UpdateScorebar(-0.3);
     }
 }

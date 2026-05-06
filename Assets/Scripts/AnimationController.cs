@@ -9,6 +9,7 @@ public class AnimationController
     public event Action PerfectInputEffectRequested;
     public event Action GoodInputEffectRequested;
     public event Action MissInputEffectRequested;
+    public event Action OvenFireEffectRequested;
 
     public static AnimationController Instance => _instance;
 
@@ -20,6 +21,7 @@ public class AnimationController
     {
         _scorebar = scorebar;
         _1StarEffect = oneStarEffect;
+        UpdateScorebar(0);
         return this;
     }
 
@@ -31,6 +33,7 @@ public class AnimationController
 
     public void UpdateScorebar(double score)
     {
+        double minx = -0.13, maxx = -1.26;
         if (_scorebar == null)
         {
             Debug.LogWarning("Scorebar is not set.");
@@ -45,7 +48,8 @@ public class AnimationController
         }
 
         Vector3 localPosition = cubeTransform.localPosition;
-        localPosition.x = (float)-score;
+        localPosition.x = (float)((score + 1) / 2 * (maxx - minx) + minx);
+        Debug.Log($"Updating scorebar: score={score}, localPosition.x={localPosition.x}");
         cubeTransform.localPosition = localPosition;
     }
     public void ShowPerfectInputEffect()
@@ -149,6 +153,8 @@ public class AnimationController
 
         mover.MoveTo(new Vector3(-28.2313995f, 1.38800001f, 28.9249992f), 0.5f, SimpleController.CommandOption.Queue);
         mover.RotateTo(new Vector3(0f, 1440f, 0f), 0.5f, SimpleController.CommandOption.Queue);
+
+        OvenFireEffectRequested?.Invoke();
     }
     public void SetFinalScore(GameObject scoreTextField, GameObject hat, int score, double scorePercentage)
     {
@@ -158,6 +164,6 @@ public class AnimationController
         scoreTextField.GetComponent<ScoreTextFieldController>().SetScore(score, 3.5);
         hat.GetComponent<HatScaleController>().SetScale(hatScale, 3.5);
 
-
+        
     }
 }
