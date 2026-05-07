@@ -13,7 +13,7 @@ public class GameCore
 	public static event Action StartBearTeacherEvent;
 	[SerializeField] private float _toleranceSeconds = 0.1f;
 	[SerializeField] private int score = 0, max_score = 100, combo = 0, current_combo, perfectCount = 0, goodCount = 0, badCount = 0;
-	private int _score_record = -999999;
+	private static int _score_record = -999999;
 	private AudioSource _musicSource;
 	private TempoTemplate _tempoTemplate;
 	private BeatTimingManager _beatTimingManager;
