@@ -17,6 +17,7 @@ public class Main : MonoBehaviour
         {
             Debug.LogWarning("Game is already running. Restarting with new template.");
         }
+        InitializeAnimationController();
         _gameCore = new GameCore(template);
         _gameCore.Start();
         _combinedGestureDetector.SetGameCoreReference(_gameCore);
