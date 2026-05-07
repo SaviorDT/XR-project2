@@ -296,7 +296,7 @@ public class GameCore
 		{
 			bool hasReached1Star = score >= max_score * 0.75;
 			double safeDeltaSeconds = Math.Max(Math.Abs(deltaSeconds), _toleranceSeconds / 4.136);
-			score += (int)(_toleranceSeconds / safeDeltaSeconds * 1000);
+			score += (int)(_toleranceSeconds / safeDeltaSeconds * 1000) + current_combo * 200;
 			AnimationController.Instance.UpdateScorebar(Math.Min((double)score / max_score, 1.0));
 			if ((double) score / max_score >= 0.75 && !hasReached1Star) 
 			{
