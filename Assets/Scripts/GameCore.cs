@@ -13,6 +13,7 @@ public class GameCore
 	public static event Action StartBearTeacherEvent;
 	[SerializeField] private float _toleranceSeconds = 0.1f;
 	[SerializeField] private int score = 0, max_score = 100, combo = 0, current_combo, perfectCount = 0, goodCount = 0, badCount = 0;
+	private int _score_record = -999999;
 	private AudioSource _musicSource;
 	private TempoTemplate _tempoTemplate;
 	private BeatTimingManager _beatTimingManager;
@@ -20,6 +21,7 @@ public class GameCore
 	private CancellationTokenSource _tickCts;
 	private bool _finalSceneLoaded;
 	public static event Action OnGameStart, OnFinalSceneStart, OnReturnMainScene;
+	public static event Action<int> OnRecordScoreUpdated;
 
 	public GameCore(TempoTemplate tempoTemplate)
 	{
@@ -377,6 +379,7 @@ public class GameCore
 		SceneManager.LoadScene("FinalScene", LoadSceneMode.Additive);
 		SceneManager.UnloadSceneAsync("SampleScene");
 		OnFinalSceneStart?.Invoke();
+		_score_record = Math.Max(_score_record, score);
 	}
 
 	private async void OnFinalSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -411,7 +414,22 @@ public class GameCore
 		}
 
 		_finalSceneLoaded = false;
+		TaskCompletionSource<bool> sampleSceneLoaded = new TaskCompletionSource<bool>();
+		void OnSampleSceneLoaded(Scene loadedScene, LoadSceneMode loadMode)
+		{
+			if (loadedScene.name == "SampleScene")
+			{
+				SceneManager.sceneLoaded -= OnSampleSceneLoaded;
+				sampleSceneLoaded.TrySetResult(true);
+			}
+		}
+
+		SceneManager.sceneLoaded += OnSampleSceneLoaded;
 		SceneManager.LoadScene("SampleScene", LoadSceneMode.Additive);
+		await sampleSceneLoaded.Task;
 		OnReturnMainScene?.Invoke();
+		OnRecordScoreUpdated?.Invoke(_score_record);
+		Debug.Log(OnRecordScoreUpdated.GetInvocationList().Length);
+		Debug.Log($"GameEnd: score={score}, record={_score_record}");
 	}
 }
