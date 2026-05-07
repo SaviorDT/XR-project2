@@ -240,7 +240,7 @@ public class GameCore
 			return;
 		}
 
-		const string musicObjectName = "GameMusic";
+		const string musicObjectName = "woodhouse";
 		GameObject musicObject = GameObject.Find(musicObjectName);
 		if (musicObject == null)
 		{
@@ -252,7 +252,8 @@ public class GameCore
 		{
 			_musicSource = musicObject.AddComponent<AudioSource>();
 		}
-
+		
+		_musicSource.Stop();
 		_musicSource.clip = clip;
 		_musicSource.Play();
 	}
