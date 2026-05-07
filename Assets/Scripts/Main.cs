@@ -20,13 +20,13 @@ public class Main : MonoBehaviour
         _gameCore = new GameCore(template);
         _gameCore.Start();
         _combinedGestureDetector.SetGameCoreReference(_gameCore);
+        _keyInputController.SetFinalCallback(_gameCore.ReturnToLobby);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         InitializeAnimationController();
-        _keyInputController.SetStartCallback(InvokeGameStart);
         // StartCoroutine(StartGameAfterDelay(10f));
     }
 
