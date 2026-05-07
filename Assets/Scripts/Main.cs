@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    private GameCore _gameCore;
+    private GameCore _gameCore = new(new TestTempoWithoutAudio());
     [SerializeField] private KeyInputController _keyInputController;
     [SerializeField] private CombinedGestureDetector _combinedGestureDetector;
     public void StartGame(TempoTemplate template)
