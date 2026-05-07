@@ -5,7 +5,7 @@ using UnityEngine.XR;
 public class KeyInputController : MonoBehaviour
 {
     private Action<TempoEventType> callback;
-    private Action startCallback;
+    private Action finalCallback;
     void Start()
     {
     }
@@ -23,7 +23,7 @@ public class KeyInputController : MonoBehaviour
         }
         else if (OVRInput.GetUp(OVRInput.RawButton.B))
         {
-            startCallback?.Invoke();
+            finalCallback?.Invoke();
         }
     }
 
@@ -31,8 +31,8 @@ public class KeyInputController : MonoBehaviour
     {
         callback = action;
     }
-    public void SetStartCallback(Action action)
+    public void SetFinalCallback(Action action)
     {
-        startCallback = action;
+        finalCallback = action;
     }
 }

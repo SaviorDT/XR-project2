@@ -402,8 +402,9 @@ public class GameCore
 			GameObject.Find("Hat"),
 			score,
 			(double)Math.Max(score, 0) / max_score);
-
-		await Task.Delay(10000);
+	}
+	public async void ReturnToLobby()
+	{
 		AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync("FinalScene");
 		if (unloadOperation != null)
 		{
