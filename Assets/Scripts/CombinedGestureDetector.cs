@@ -276,28 +276,26 @@ public class CombinedGestureDetector : MonoBehaviour
             return;
         }
 
+        if (sprinkleCenterEyeAnchor == null) return;
+
         // 計算平滑速度
         Vector3 rawDelta    = transform.position - rollingPreviousPosition;
         Vector3 rawVelocity = rawDelta / Time.deltaTime;
         rollingSmoothedVelocity = Vector3.Lerp(rollingSmoothedVelocity, rawVelocity, 1f - rollingVelocitySmoothing);
 
-        // 忽略 Y 軸位移
-        Vector3 horizontalDelta = rawDelta;
-        horizontalDelta.y = 0f;
+        float speed = rollingSmoothedVelocity.magnitude;
+
+        // 取得玩家面向的水平參考軸
+        Vector3 playerForward = sprinkleCenterEyeAnchor.forward;
+        playerForward.y = 0f;
+        playerForward.Normalize();
 
         // 使用局部 Forward 作為滾動方向
-        Vector3 rollDirection = transform.forward;
-        rollDirection.y = 0f;
-        rollDirection.Normalize();
-        Vector3 pinAxleDirection = Vector3.Cross(Vector3.up, rollDirection);
+        Vector3 rollDirection = playerForward;
 
-        float forwardAmount  = Mathf.Abs(Vector3.Dot(horizontalDelta, rollDirection));
-        float sidewaysAmount = Mathf.Abs(Vector3.Dot(horizontalDelta, pinAxleDirection));
+        float forwardAmount  = Mathf.Abs(Vector3.Dot(rawDelta, rollDirection));
 
-        bool isForwardMovement = forwardAmount > sidewaysAmount * rollingForwardDominance;
-        float currentSpeed     = rollingSmoothedVelocity.magnitude;
-
-        if (currentSpeed > rollingMinSpeedThreshold && isForwardMovement)
+        if (speed > rollingMinSpeedThreshold)
         {
             rollingAccumulatedDistance += forwardAmount;
         }

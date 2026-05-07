@@ -49,7 +49,7 @@ public class AnimationController
 
         Vector3 localPosition = cubeTransform.localPosition;
         localPosition.x = (float)((score + 1) / 2 * (maxx - minx) + minx);
-        Debug.Log($"Updating scorebar: score={score}, localPosition.x={localPosition.x}");
+        // Debug.Log($"Updating scorebar: score={score}, localPosition.x={localPosition.x}");
         cubeTransform.localPosition = localPosition;
     }
     public void ShowPerfectInputEffect()
