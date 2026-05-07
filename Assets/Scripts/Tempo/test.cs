@@ -74,6 +74,7 @@ public class TestTempo : TempoTemplate
 			new (72, TempoBatchEventType.end)
 		}),
 
+
 		new TempoBatch(1, TempoEventType.send, _eventHandler, GetPizza())
 		.AddEvent(new List<KeyValuePair<double, TempoBatchEventType>>
 		{
