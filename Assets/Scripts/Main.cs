@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
-    private GameCore _gameCore = new(new TestTempoWithoutAudio());
+    private GameCore _gameCore;
     [SerializeField] private KeyInputController _keyInputController;
     [SerializeField] private CombinedGestureDetector _combinedGestureDetector;
     public void StartGame(TempoTemplate template)
@@ -27,6 +28,7 @@ public class Main : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SceneManager.LoadScene("SampleScene", LoadSceneMode.Additive);
         InitializeAnimationController();
         // StartCoroutine(StartGameAfterDelay(10f));
     }

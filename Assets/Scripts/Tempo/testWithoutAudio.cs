@@ -3,9 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class TestTempoWithoutAudio : TempoTemplate
 {
@@ -109,11 +106,7 @@ public class TestTempoWithoutAudio : TempoTemplate
 
 	private static AudioClip LoadMusic()
 	{
-#if UNITY_EDITOR
-		return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Margarito_BGM.wav");
-#else
-		return null;
-#endif
+		return Resources.Load<AudioClip>("Audio/Margarito_BGM");
 	}
 
 
@@ -222,23 +215,23 @@ public class TestTempoWithoutAudio : TempoTemplate
 
 		private AudioClip GetRollForwardAudioClip()
 		{
-			return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Track 1 Margarito/roll_out_dough_forward.wav");
+			return Resources.Load<AudioClip>("Audio/Track 1 Margarito/roll_out_dough_forward");
 		}
 		private AudioClip GetRollBackwardAudioClip()
 		{
-			return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Track 1 Margarito/roll_out_dough_backward.wav");
+			return Resources.Load<AudioClip>("Audio/Track 1 Margarito/roll_out_dough_backward");
 		}
 		private AudioClip GetCutAudioClip()
 		{
-			return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Track 1 Margarito/cut_tomato.wav");
+			return Resources.Load<AudioClip>("Audio/Track 1 Margarito/cut_tomato");
 		}
 		private AudioClip GetPutAudioClip()
 		{
-			return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Track 1 Margarito/place_ingredient.wav");
+			return Resources.Load<AudioClip>("Audio/Track 1 Margarito/place_ingredient");
 		}
 		private AudioClip GetSendAudioClip()
 		{
-			return AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/Track 1 Margarito/baking_tray.wav");
+			return Resources.Load<AudioClip>("Audio/Track 1 Margarito/baking_tray");
 		}
 
 		private static AudioSource GetSfxSource()
